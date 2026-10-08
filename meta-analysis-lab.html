@@ -168,6 +168,20 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
 .interp{max-width:none}
 .interp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
 @media (max-width:640px){.interp-grid{grid-template-columns:minmax(0,1fr)}}
+.paper th,.paper td{border-bottom:none;white-space:normal;position:static;background:transparent}
+.rep-grid{display:flex;flex-direction:column;gap:22px;margin-top:16px}
+.rep-item{display:flex;flex-direction:column;gap:8px;min-width:0}
+.paper{background:#ffffff;color:#000000;border:1px solid var(--line);border-radius:6px;padding:20px 22px;overflow-x:auto}
+.paper .figbox svg{display:block;max-width:100%;height:auto}
+button.bad{border-color:var(--raw);color:var(--raw)}
+.subhead{font-family:var(--display);font-size:20px;font-weight:650;margin:12px 0 0}
+ol.steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
+ol.steps li{font-size:14.5px}
+.modtab th,.modtab td.num{text-align:center}
+.modtab th:first-child{text-align:left}
+.modblock{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--line);margin-top:8px}
+.modmode{display:flex;flex-wrap:wrap;gap:8px 20px;padding:10px 12px;background:var(--accent-soft);border-radius:8px;font-size:14px}
+.modmode label{display:flex;align-items:center;gap:6px;cursor:pointer}
 .foot{font-size:12.5px;color:var(--muted);max-width:72ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -193,6 +207,12 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
         </ul>
       </li>
       <li><a href="#heterogeneity">Heterogeneity statistics</a></li>
+      <li><a href="#moderators">Moderators</a>
+        <ul>
+          <li><a href="#modcat">Categorical moderators: subgroup analysis</a></li>
+          <li><a href="#modcont">Continuous moderators: meta-regression</a></li>
+        </ul>
+      </li>
       <li><a href="#attenuation">Correction for attenuation</a>
         <ul>
           <li><a href="#corrected">Mean corrected correlation and reliability distributions</a></li>
@@ -299,6 +319,79 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
     <p style="font-size:14.5px">Kepes et al. separate <strong>absolute</strong> statistics, which quantify the amount of heterogeneity and can be compared across meta-analyses, from <strong>relative</strong> statistics, which express the share of observed variance that reflects real differences. The benchmarks below are the ones they review. Each comes from a single study in a particular context, so they caution against applying them mechanically; whether heterogeneity is large should be judged against the purpose and context of the research.</p>
     <div class="tablewrap hetwrap"><table id="hetTable"></table></div>
     <p class="foot" style="margin:0">Q, I², H², τ², and the prediction interval use Fisher&rsquo;s z with weights N − 3 (DerSimonian&ndash;Laird estimator), back-transformed to r where noted. The prediction interval uses t with k − 2 df, following the appendix formulas in Kepes et al. The Hunter &amp; Schmidt rows use the untransformed correlations. The p-value for Q uses the Wilson&ndash;Hilferty approximation to the chi-square distribution.</p>
+  </section>
+
+  <a class="totop" href="#contents">&uarr; Back to contents</a>
+
+  <section class="exp" id="moderators" aria-labelledby="h-mod">
+    <div class="exp-head">
+      <h2 id="h-mod">Moderators</h2>
+      <p class="lede">When the heterogeneity statistics suggest that population correlations differ across studies, the next step is to find out why. Actually, even if there isn&rsquo;t an exorbitant amount of variance, there may still be moderators. In any case, a moderator is a study characteristic that changes the size of the relationship. How a moderator is tested depends on whether it is categorical or continuous.</p>
+    </div>
+    <div class="panel prose" style="max-width:none">
+      <div class="interp-grid">
+        <div class="method"><h4>Categorical moderators: subgroup analysis</h4><p>When the moderator has a small number of categories (laboratory vs. field studies, self-report vs. supervisor ratings, published vs. unpublished), studies are sorted by category and a separate meta-analysis is run within each subgroup. The moderator is supported when the subgroup means differ and when the variance <em>within</em> each subgroup is smaller than the variance in the full set of studies, ideally down to what sampling error alone would produce (but don&rsquo;t hold your breath).</p></div>
+        <div class="method"><h4>Continuous moderators: meta-regression</h4><p>When the moderator is continuous (average tenure, mean age, publication year, percentage of women), the effect sizes are regressed on the moderator, with each study weighted by its precision. The slope shows how much the correlation changes per unit of the moderator. Continuous moderators should not be split at the median and analyzed as subgroups; doing so discards information and lowers power.</p></div>
+      </div>
+      <p class="cap" style="font-size:14px">Moderator analyses in meta-analysis are correlational. Study characteristics tend to travel together (field studies may also use larger samples and different measures), so a moderator can stand in for something else. Each subgroup or regression also needs enough studies for stable estimates.</p>
+    </div>
+
+    <h3 id="modcat" class="subhead">Categorical moderators: subgroup analysis</h3>
+    <p class="cap" style="font-size:14px;max-width:72ch">Suppose some studies were conducted in the laboratory and others in the field, and the population correlation differs between the two settings. Use the sliders to set the correlation in each setting and see how a single overall meta-analysis compares with separate subgroup analyses.</p>
+    <div class="lab">
+      <div class="panel controls">
+        <div class="ctl"><div class="ctl-top"><label for="mcA">Population ρ, laboratory studies</label><output id="mcA-o"></output></div><input type="range" id="mcA" min="-0.3" max="0.7" step="0.01" value="0.15"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mcB">Population ρ, field studies</label><output id="mcB-o"></output></div><input type="range" id="mcB" min="-0.3" max="0.7" step="0.01" value="0.35"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mcP">Share of field studies</label><output id="mcP-o"></output></div><input type="range" id="mcP" min="0.1" max="0.9" step="0.05" value="0.5"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mcK">Number of studies (k)</label><output id="mcK-o"></output></div><input type="range" id="mcK" min="6" max="100" step="1" value="30"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mcN">Mean sample size</label><output id="mcN-o"></output></div><input type="range" id="mcN" min="20" max="400" step="5" value="100"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mcT">True SD of ρ within each setting</label><output id="mcT-o"></output></div><input type="range" id="mcT" min="0" max="0.15" step="0.01" value="0"><small>0 means the setting explains all of the real variation.</small></div>
+        <div class="btns"><button type="button" id="mcRedraw">Draw new studies</button><button type="button" id="mcReset">Reset to defaults</button></div>
+      </div>
+      <div class="plotcol">
+        <div class="panel"><div class="plot" id="mcPlot"></div>
+          <div class="plot-cap"><span class="key">Dot area proportional to N</span><span class="key"><span class="sw" style="border-color:var(--fg)"></span>Subgroup weighted mean</span><span class="key"><span class="sw dash" style="border-color:var(--muted)"></span>Overall weighted mean</span></div></div>
+        <div class="verdict" id="mcVerdict"></div>
+      </div>
+    </div>
+    <div class="panel" style="padding:0"><div class="tablewrap hetwrap" style="margin:0;border:0"><table id="mcTable" class="modtab"></table></div></div>
+    <div class="panel prose" style="max-width:none">
+      <h4 class="sub" style="margin-top:0">How to run a subgroup analysis</h4>
+      <ol class="steps">
+        <li><strong>Code each study</strong> on the moderator before looking at the effect sizes.</li>
+        <li><strong>Meta-analyze each subgroup separately</strong>, computing the weighted mean, the observed and sampling error variances, SD<sub>ρ</sub> and the credibility interval within each subgroup (the rows of the table above).</li>
+        <li><strong>Compare the subgroup means.</strong> Q<sub>between</sub> tests whether the subgroup means differ by more than chance; non-overlapping confidence intervals tell a similar story.</li>
+        <li><strong>Check the heterogeneity within subgroups.</strong> If the moderator accounts for the variation, SD<sub>ρ</sub> falls and the percentage of variance due to sampling error rises within each subgroup compared with the overall analysis. Q<sub>within</sub> tests whether heterogeneity remains after the moderator is taken into account.</li>
+      </ol>
+      <div class="live" id="mcLive"></div>
+    </div>
+
+    <h3 id="modcont" class="subhead">Continuous moderators: meta-regression</h3>
+    <p class="cap" style="font-size:14px;max-width:72ch">Now suppose the moderator is the average job tenure of each study&rsquo;s sample, and the correlation grows (or shrinks) as tenure increases. Each bubble is a study, sized by its sample size; the line is the fitted meta-regression.</p>
+    <div class="lab">
+      <div class="panel controls">
+        <div class="ctl"><div class="ctl-top"><label for="mrRho">Population ρ at average tenure <span style="white-space:nowrap">(8 years)</span></label><output id="mrRho-o"></output></div><input type="range" id="mrRho" min="-0.2" max="0.6" step="0.01" value="0.25"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mrB">Change in ρ per year of tenure</label><output id="mrB-o"></output></div><input type="range" id="mrB" min="-0.03" max="0.03" step="0.001" value="0.02"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mrT">Residual SD of ρ</label><output id="mrT-o"></output></div><input type="range" id="mrT" min="0" max="0.15" step="0.01" value="0"><small>Variation in ρ that tenure does not explain.</small></div>
+        <div class="ctl"><div class="ctl-top"><label for="mrK">Number of studies (k)</label><output id="mrK-o"></output></div><input type="range" id="mrK" min="6" max="100" step="1" value="30"></div>
+        <div class="ctl"><div class="ctl-top"><label for="mrN">Mean sample size</label><output id="mrN-o"></output></div><input type="range" id="mrN" min="20" max="400" step="5" value="100"></div>
+        <div class="btns"><button type="button" id="mrRedraw">Draw new studies</button><button type="button" id="mrReset">Reset to defaults</button></div>
+      </div>
+      <div class="plotcol">
+        <div class="panel"><div class="plot" id="mrPlot"></div>
+          <div class="plot-cap"><span class="key">Bubble area proportional to N</span><span class="key"><span class="sw" style="border-color:var(--accent)"></span>Meta-regression line</span><span class="key"><span class="sw dash" style="border-color:var(--muted)"></span>Weighted mean ignoring tenure</span></div></div>
+        <div class="verdict" id="mrVerdict"></div>
+      </div>
+    </div>
+    <div class="two">
+      <div class="panel"><h3 style="margin-bottom:8px">Meta-regression results</h3><div class="ledger" id="mrLedger"></div></div>
+      <div class="panel prose">
+        <h3>How meta-regression works</h3>
+        <p>Each study&rsquo;s correlation is converted to Fisher&rsquo;s z and regressed on the moderator by weighted least squares. The weights are the inverse of each study&rsquo;s sampling variance plus τ<sup>2</sup><sub>res</sub>, the variance in true effects left over after the moderator is taken into account (a mixed-effects model). This lets large studies count more while acknowledging that the moderator may not explain everything.</p>
+        <p>The <strong>slope</strong> is the change in the effect for a one-unit change in the moderator; its z test and confidence interval show whether the relationship is distinguishable from zero. <strong>Q<sub>M</sub></strong> is the corresponding test of the model. <strong>R²</strong> is the proportion of the between-study variance (τ²) that the moderator explains. <strong>Q<sub>E</sub></strong> and τ<sup>2</sup><sub>res</sub> show how much heterogeneity remains; if it is substantial, other moderators are likely at work.</p>
+        <p>In the Hunter and Schmidt tradition the same question is often addressed by weighted least squares regression of the correlations on the moderator with sample-size weights (Steel &amp; Kammeyer-Mueller, 2002), which gives very similar slopes.</p>
+      </div>
+    </div>
   </section>
 
   <a class="totop" href="#contents">&uarr; Back to contents</a>
@@ -498,7 +591,7 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
     <div class="exp-head">
       <span class="tag">Part 3</span>
       <h2 id="h-own">Analyze your own data</h2>
-      <p class="lede">Paste or upload the studies from your own meta-analysis to run the same computations shown above: the sample-size weighted mean, sampling error and heterogeneity statistics, a correction for unreliability when reliabilities are available, and the publication bias methods. Your data never leave this page; everything is computed in your browser.</p>
+      <p class="lede">Paste or upload the studies from your own meta-analysis to run the same computations shown above: the sample-size weighted mean, sampling error and heterogeneity statistics, a correction for unreliability when reliabilities are available, a moderator analysis when a moderator is included, and the publication bias methods. You can then create APA-style tables and figures from the results. Your data never leave this page; everything is computed in your browser.</p>
     </div>
 
     <div class="lab owninput">
@@ -506,7 +599,7 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
         <div class="ctl">
           <label for="u-input">Study data</label>
           <textarea id="u-input" rows="12" spellcheck="false"></textarea>
-          <small>One study per row: <strong>N</strong>, <strong>r</strong>, and optionally <strong>r<sub>xx</sub></strong> and <strong>r<sub>yy</sub></strong>. Separate columns with commas, tabs or spaces; you can paste straight from Excel. A header row is optional (recognized names: study, N, r, rxx, ryy). Leave a reliability blank or write NA when a study did not report it.</small>
+          <small>One study per row: <strong>N</strong>, <strong>r</strong>, and optionally <strong>r<sub>xx</sub></strong>, <strong>r<sub>yy</sub></strong> and one or more <strong>moderators</strong>. Separate columns with commas, tabs or spaces; you can paste straight from Excel. A header row is optional (recognized names: study, N, r, rxx, ryy; any other columns, such as setting or % women, are treated as moderators). Leave a reliability blank or write NA when a study did not report it. A moderator can be a category (Lab, Field) or a number (% women); categories are analyzed by subgroup, numbers by meta-regression.</small>
         </div>
         <div class="ctl">
           <label for="u-file">Or upload a .csv or .txt file</label>
@@ -557,6 +650,12 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
         <div class="tablewrap hetwrap"><table id="u-het"></table></div>
       </div>
 
+      <div class="panel prose" id="u-modpanel" style="margin-top:20px;max-width:none">
+        <h3>Moderator analysis</h3>
+        <div id="u-modmsg"></div>
+        <div id="u-modlist"></div>
+      </div>
+
       <div class="panel prose bias" style="margin-top:20px">
         <h3>Publication bias</h3>
         <div id="u-biasWarn"></div>
@@ -583,6 +682,12 @@ button.primary:hover{color:var(--surface);filter:brightness(1.08)}
         <div class="stats" id="u-stats3"></div>
         <div class="tablewrap hetwrap" style="margin-top:4px"><table id="u-biasTable"></table></div>
         <p class="foot" style="margin:0">Methods and benchmarks are the same as in Part 2. See <a href="#biasmethods">how the methods work</a> and the caution about small-sample bias before drawing conclusions.</p>
+      </div>
+      <div class="panel prose" id="u-report" style="margin-top:20px;max-width:none">
+        <h3>Results tables and figures</h3>
+        <p class="cap" style="font-size:14px">Create APA-style tables and figures from your results. Copy a table and paste it into Word or Google Docs with its formatting intact, or download it as a CSV file. Copy a figure as an image, or download it as a PNG (or as an SVG for vector graphics).</p>
+        <div class="btns"><button type="button" class="primary" id="u-makeReport">Create tables and figures</button></div>
+        <div id="u-reportOut"></div>
       </div>
     </div>
   </section>
@@ -641,6 +746,7 @@ function renderHet(S,T,tid="hetTable"){
     ["Coefficient of variation","SDρ / |<span class='ov'>r</span>|",isFinite(cv)?cv.toFixed(2):"–","–","SDρ expressed relative to the size of the mean correlation."],
   ];
   $(tid).innerHTML=`<thead><tr><th>Statistic</th><th>Formula</th><th style="text-align:right">Value</th><th>Benchmark</th><th>Interpretation</th></tr></thead><tbody>${rows.map(rw=>rw.g?`<tr class="grp"><td colspan="5">${rw.g}</td></tr>`:`<tr><td>${rw[0]}</td><td class="eqc">${rw[1]}</td><td class="num">${rw[2]}</td><td class="bmc">${rw[3]}</td><td>${rw[4]}</td></tr>`).join("")}</tbody>`;
+  return {Q,df,p,I2,H2,tau2,tau,pi};
 }
 
 function tToP(t,df){const z=Math.abs(t)*(1-1/(4*df))/Math.sqrt(1+t*t/(2*df));return 2*(1-normCdf(z));}
@@ -817,6 +923,7 @@ function renderBias(D,P=""){
    rows.forEach((rw,i)=>{const cy=top+i*rh+rh/2;s+=`<text x="${L-10}" y="${cy+4}" text-anchor="end" class="${rw.ref?"lab-t":"lab-m"}">${rw.name}</text>`;
      s+=`<circle cx="${x(rw.val)}" cy="${cy}" r="5.5" fill="${rw.ref?"var(--fg)":"var(--raw)"}"/><text x="${x(rw.val)+9}" y="${cy+4}" class="tick">${fr(rw.val)}</text>`;});
    E("plot5").innerHTML=s+`</svg>`;}
+  return {k,naive,naiveFE:T(naiveFE),re,eg,egT,egP,bg,pet,peese,usePeese,petP1,pp,tfF,tfR,adj,vals,avgAdj,baseR,maxR,avgR,overall,conv,fsn,crit,z,v,se,pub};
 }
 /* ---------------- Part 1 ---------------- */
 let seed1=20261007, base1;
@@ -1066,26 +1173,398 @@ function renderArt(){
 }
 ["mRxx","mRyy","pRep"].forEach(id=>$(id).addEventListener("input",renderArt));
 document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const t=document.getElementById(a.getAttribute("href").slice(1));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});});
+/* ---------------- Results tables and figures ---------------- */
+let uLast=null;
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const strip=h=>{const d=document.createElement("div");d.innerHTML=h;return d.textContent.replace(/\s+/g," ").trim();};
+const br=(a,b,d=2)=>`[${fr(a,d)}, ${fr(b,d)}]`;
+const FONT='font-family="Arial, Helvetica, sans-serif"';
+const TS="font-family:'Times New Roman',Times,serif;font-size:12pt;color:#000;";
+function apaTable(num,title,head,rows,note){
+  const cell="padding:3px 12px;vertical-align:top;";
+  const th=head.map((h,i)=>`<th style="${TS}${cell}font-weight:normal;border-top:1px solid #000;border-bottom:1px solid #000;text-align:${i?"center":"left"}">${h}</th>`).join("");
+  const last=rows.length-1;
+  const body=rows.map((r,ri)=>{const bb=ri===last?"border-bottom:1px solid #000;":"";
+    if(r.group)return `<tr><td colspan="${head.length}" style="${TS}${cell}font-style:italic;text-align:left;padding-top:8px;${bb}">${r.group}</td></tr>`;
+    return `<tr>${r.map((c,i)=>`<td style="${TS}${cell}${bb}text-align:${i?"center":"left"}">${c}</td>`).join("")}</tr>`;}).join("");
+  const html=`<div class="apa"><p style="${TS}font-weight:bold;margin:0">Table ${num}</p><p style="${TS}font-style:italic;margin:0 0 6px">${title}</p><table style="border-collapse:collapse;${TS}"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>${note?`<p style="${TS}margin:6px 0 0"><i>Note.</i> ${note}</p>`:""}</div>`;
+  const csvRows=[head.map(strip)].concat(rows.map(r=>r.group?[strip(r.group)]:r.map(strip)));
+  return {html,csv:csvRows.map(r=>r.map(c=>/[",\n]/.test(c)?`"${c.replace(/"/g,'""')}"`:c).join(",")).join("\r\n"),num};
+}
+function niceTicks(lo,hi){const span=hi-lo,st=span>1.2?0.4:span>0.6?0.2:span>0.25?0.1:0.05;const t=[];for(let v=Math.ceil(lo/st-1e-9)*st;v<=hi+1e-9;v+=st)t.push(Math.abs(v)<1e-9?0:v);return t;}
+function svgOpen(W,H,label){return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" ${FONT} font-size="12" role="img" aria-label="${esc(label)}"><rect width="${W}" height="${H}" fill="#ffffff"/>`;}
+function xAxis(x,ticks,y,lab,cx){let s=`<line x1="${x(ticks[0])}" x2="${x(ticks[ticks.length-1])}" y1="${y}" y2="${y}" stroke="#000"/>`;
+  ticks.forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${y}" y2="${y+5}" stroke="#000"/><text x="${x(t)}" y="${y+18}" text-anchor="middle" fill="#000">${fr(t,1).replace(/^\.0$/,"0").replace(/^0?\.0$/,"0")}</text>`;});
+  return s+`<text x="${cx}" y="${y+36}" text-anchor="middle" fill="#000">${lab}</text>`;}
+function figForest(R){
+  const d=R.data,k=d.length,maxN=Math.max(...d.map(s=>s.N));
+  const ci=d.map(s=>{const z=Math.atanh(s.r),h=1.96/Math.sqrt(s.N-3);return [Math.tanh(z-h),Math.tanh(z+h)];});
+  let lo=Math.min(0,R.T.ci[0],...ci.map(c=>c[0])),hi=Math.max(0,R.T.ci[1],...ci.map(c=>c[1]));
+  lo=Math.max(-1,Math.floor(lo*10)/10);hi=Math.min(1,Math.ceil(hi*10)/10);
+  const W=700,L=200,Rr=150,top=34,rh=18,yAx=top+rh*(k+2)+8,H=yAx+48,x=v=>L+(v-lo)/(hi-lo)*(W-L-Rr);
+  let s=svgOpen(W,H,"Forest plot");
+  s+=`<text x="10" y="18" font-weight="bold" fill="#000">Study</text><text x="${W-Rr+14}" y="18" font-weight="bold" fill="#000">r [95% CI]</text><text x="${W-40}" y="18" font-weight="bold" fill="#000" text-anchor="end"></text>`;
+  s+=`<line x1="${x(0)}" x2="${x(0)}" y1="${top-6}" y2="${yAx}" stroke="#000" stroke-dasharray="3 3"/>`;
+  d.forEach((st,i)=>{const y=top+rh*i+rh/2,sz=2.5+5.5*Math.sqrt(st.N/maxN),lab=st.label.length>30?st.label.slice(0,29)+"…":st.label;
+    s+=`<text x="10" y="${y+4}" fill="#000">${esc(lab)}</text><line x1="${x(Math.max(lo,ci[i][0]))}" x2="${x(Math.min(hi,ci[i][1]))}" y1="${y}" y2="${y}" stroke="#000"/><rect x="${x(st.r)-sz}" y="${y-sz}" width="${2*sz}" height="${2*sz}" fill="#000"/><text x="${W-Rr+14}" y="${y+4}" fill="#000">${fr(st.r,2)} ${br(ci[i][0],ci[i][1])}</text>`;});
+  const ys=top+rh*k+rh;
+  s+=`<line x1="10" x2="${W-10}" y1="${ys-rh/2-2}" y2="${ys-rh/2-2}" stroke="#999"/>`;
+  s+=`<polygon points="${x(R.T.ci[0])},${ys} ${x(R.T.rw)},${ys-7} ${x(R.T.ci[1])},${ys} ${x(R.T.rw)},${ys+7}" fill="#000"/>`;
+  s+=`<text x="10" y="${ys+4}" font-weight="bold" fill="#000">Weighted mean (k = ${k}, N = ${fi(R.S.SN)})</text><text x="${W-Rr+14}" y="${ys+4}" font-weight="bold" fill="#000">${fr(R.T.rw,2)} ${br(R.T.ci[0],R.T.ci[1])}</text>`;
+  s+=xAxis(x,niceTicks(lo,hi),yAx,"Correlation (r)",(L+W-Rr)/2);
+  return s+`</svg>`;
+}
+function figFunnel(R){
+  const B=R.bias,T=Math.tanh,imp=B.tfR.fill.map(f=>({r:T(f.z),se:Math.sqrt(f.v)}));
+  const W=620,L=64,Rr=20,top=16,H=360,pw=W-L-Rr;
+  const rs=B.pub.map(p=>p.r).concat(imp.map(f=>f.r),[B.naive]);
+  let lo=Math.max(-1,Math.floor((Math.min(...rs)-0.1)*10)/10),hi=Math.min(1,Math.ceil((Math.max(...rs)+0.1)*10)/10);
+  const seMax=Math.max(...B.se,...imp.map(f=>f.se))*1.08,x=v=>L+(Math.max(lo,Math.min(hi,v))-lo)/(hi-lo)*pw,y=v=>top+v/seMax*H;
+  let s=svgOpen(W,top+H+94,"Contour-enhanced funnel plot");
+  s+=`<defs><clipPath id="fpc"><rect x="${L}" y="${top}" width="${pw}" height="${H}"/></clipPath></defs><g clip-path="url(#fpc)"><rect x="${L}" y="${top}" width="${pw}" height="${H}" fill="#e6e6e6"/>`;
+  const band=(c,fill)=>{let a=[],b=[];for(let j=0;j<=40;j++){const sv=seMax*j/40;a.push(`${x(T(-c*sv)).toFixed(1)},${y(sv).toFixed(1)}`);b.unshift(`${x(T(c*sv)).toFixed(1)},${y(sv).toFixed(1)}`);}return `<polygon points="${a.concat(b).join(" ")}" fill="${fill}"/>`;};
+  s+=band(1.96,"#b3b3b3")+band(1.645,"#ffffff")+`</g>`;
+  s+=`<rect x="${L}" y="${top}" width="${pw}" height="${H}" fill="none" stroke="#000"/>`;
+  const st=seMax>0.3?0.1:0.05;for(let v=0;v<=seMax+1e-9;v+=st){s+=`<line x1="${L-5}" x2="${L}" y1="${y(v)}" y2="${y(v)}" stroke="#000"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" fill="#000">${v<1e-9?"0":fr(v,2)}</text>`;}
+  s+=`<text transform="translate(16 ${top+H/2}) rotate(-90)" text-anchor="middle" fill="#000">Standard error (Fisher's z)</text>`;
+  s+=`<line x1="${x(B.naive)}" x2="${x(B.naive)}" y1="${top}" y2="${top+H}" stroke="#000" stroke-width="1.5"/><line x1="${x(T(B.tfR.est))}" x2="${x(T(B.tfR.est))}" y1="${top}" y2="${top+H}" stroke="#000" stroke-width="1.5" stroke-dasharray="6 4"/>`;
+  imp.forEach(f=>{s+=`<circle cx="${x(f.r).toFixed(1)}" cy="${y(f.se).toFixed(1)}" r="3.6" fill="#fff" stroke="#000" stroke-width="1.2"/>`;});
+  B.pub.forEach((p,i)=>{s+=`<circle cx="${x(p.r).toFixed(1)}" cy="${y(B.se[i]).toFixed(1)}" r="3.6" fill="#000"/>`;});
+  s+=xAxis(x,niceTicks(lo,hi),top+H,"Correlation (r)",L+pw/2).replace(/<line x1="[^"]*" x2="[^"]*" y1="[^"]*" y2="[^"]*" stroke="#000"\/>/,"");
+  const ly=top+H+62,ly2=ly+22;let lx=L,cy=ly;
+  const item=(sym,txt)=>{const o=`<g transform="translate(${lx} ${cy})">${sym}<text x="16" y="4" fill="#000">${txt}</text></g>`;lx+=30+txt.replace(/&[a-z]+;/g,"x").length*6.6;return o;};
+  s+=item(`<circle cx="5" cy="0" r="3.6" fill="#000"/>`,"Observed")+item(`<circle cx="5" cy="0" r="3.6" fill="#fff" stroke="#000"/>`,"Imputed")+item(`<line x1="-2" x2="12" y1="0" y2="0" stroke="#000" stroke-width="1.5"/>`,"Naive mean")+item(`<line x1="-2" x2="12" y1="0" y2="0" stroke="#000" stroke-width="1.5" stroke-dasharray="4 3"/>`,"Trim-and-fill mean");
+  lx=L;cy=ly2;
+  s+=item(`<rect x="0" y="-5" width="10" height="10" fill="#fff" stroke="#000"/>`,"p &gt; .10")+item(`<rect x="0" y="-5" width="10" height="10" fill="#b3b3b3" stroke="#000"/>`,".05 &lt; p &lt; .10")+item(`<rect x="0" y="-5" width="10" height="10" fill="#e6e6e6" stroke="#000"/>`,"p &lt; .05");
+  return s+`</svg>`;
+}
+function figCumulative(R){
+  const B=R.bias,T=Math.tanh,ord=B.v.map((v,i)=>i).sort((a,b)=>B.v[a]-B.v[b]);let sw=0,swz=0;
+  const cum=ord.map(i=>{const w=1/B.v[i];sw+=w;swz+=w*B.z[i];const m=swz/sw,h=1.96/Math.sqrt(sw);return {m:T(m),lo:T(m-h),hi:T(m+h)};});
+  const n=cum.length,cs=cum.slice(Math.min(2,n-1));
+  let lo=Math.floor((Math.min(...cs.map(c=>c.lo))-0.02)*20)/20,hi=Math.ceil((Math.max(...cs.map(c=>c.hi))+0.02)*20)/20;
+  const W=620,L=64,Rr=20,top=16,H=340,pw=W-L-Rr,x=v=>L+(Math.max(lo,Math.min(hi,v))-lo)/(hi-lo)*pw,y=j=>top+(n>1?j/(n-1):0)*H;
+  let s=svgOpen(W,top+H+50,"Cumulative meta-analysis by precision");
+  s+=`<polygon points="${cum.map((c,j)=>`${x(c.lo).toFixed(1)},${y(j).toFixed(1)}`).concat(cum.map((c,j)=>`${x(c.hi).toFixed(1)},${y(j).toFixed(1)}`).reverse()).join(" ")}" fill="#d9d9d9"/>`;
+  s+=`<polyline points="${cum.map((c,j)=>`${x(c.m).toFixed(1)},${y(j).toFixed(1)}`).join(" ")}" fill="none" stroke="#000" stroke-width="1.6"/>`;
+  s+=`<line x1="${x(cum[n-1].m)}" x2="${x(cum[n-1].m)}" y1="${top}" y2="${top+H}" stroke="#000" stroke-dasharray="4 3"/>`;
+  s+=`<line x1="${L}" x2="${L}" y1="${top}" y2="${top+H}" stroke="#000"/>`;
+  const yt=[1].concat(Array.from({length:6},(_,i)=>Math.round((i+1)*n/6))).filter((v,i,a)=>v>=1&&v<=n&&a.indexOf(v)===i);
+  yt.forEach(t=>{s+=`<line x1="${L-5}" x2="${L}" y1="${y(t-1)}" y2="${y(t-1)}" stroke="#000"/><text x="${L-8}" y="${y(t-1)+4}" text-anchor="end" fill="#000">${t}</text>`;});
+  s+=`<text transform="translate(16 ${top+H/2}) rotate(-90)" text-anchor="middle" fill="#000">Studies included (most precise first)</text>`;
+  const ticks=niceTicks(lo,hi);s+=`<line x1="${L}" x2="${L+pw}" y1="${top+H}" y2="${top+H}" stroke="#000"/>`;
+  ticks.forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${top+H}" y2="${top+H+5}" stroke="#000"/><text x="${x(t)}" y="${top+H+18}" text-anchor="middle" fill="#000">${fr(t,2)}</text>`;});
+  s+=`<text x="${L+pw/2}" y="${top+H+40}" text-anchor="middle" fill="#000">Cumulative mean correlation (95% CI)</text>`;
+  return s+`</svg>`;
+}
+function figTriangulation(R){
+  const B=R.bias,nv=B.naive,rows=[{name:"Naive (random effects)",val:nv,ref:true}].concat(B.adj.map(a=>({name:a.name,val:a.val})));
+  const vals=B.adj.map(a=>a.val);
+  let lo=Math.min(nv*0.55,...vals),hi=Math.max(nv*1.45,...vals);lo=Math.floor((lo-0.02)*20)/20;hi=Math.ceil((hi+0.02)*20)/20;if(hi-lo<0.1)hi=lo+0.1;
+  const W=640,L=230,Rr=50,top=14,rh=28,H=rows.length*rh,pw=W-L-Rr,x=v=>L+(Math.max(lo,Math.min(hi,v))-lo)/(hi-lo)*pw;
+  let s=svgOpen(W,top+H+76,"Naive and bias-adjusted estimates");
+  const bandR=(p,fill)=>{const a=nv-Math.abs(nv)*p,b=nv+Math.abs(nv)*p;return `<rect x="${x(a)}" y="${top}" width="${Math.max(0,x(b)-x(a))}" height="${H}" fill="${fill}"/>`;};
+  s+=bandR(0.4,"#f0f0f0")+bandR(0.2,"#d9d9d9");
+  s+=`<line x1="${x(nv)}" x2="${x(nv)}" y1="${top}" y2="${top+H}" stroke="#000" stroke-width="1.4"/><line x1="${x(B.avgAdj)}" x2="${x(B.avgAdj)}" y1="${top}" y2="${top+H}" stroke="#000" stroke-dasharray="5 3"/>`;
+  rows.forEach((r,i)=>{const cy=top+i*rh+rh/2;s+=`<text x="${L-10}" y="${cy+4}" text-anchor="end" fill="#000"${r.ref?' font-weight="bold"':""}>${r.name}</text><circle cx="${x(r.val)}" cy="${cy}" r="5" fill="${r.ref?"#fff":"#000"}" stroke="#000" stroke-width="1.4"/><text x="${x(r.val)+9}" y="${cy+4}" fill="#000">${fr(r.val)}</text>`;});
+  const ticks=niceTicks(lo,hi);s+=`<line x1="${L}" x2="${L+pw}" y1="${top+H}" y2="${top+H}" stroke="#000"/>`;
+  ticks.forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${top+H}" y2="${top+H+5}" stroke="#000"/><text x="${x(t)}" y="${top+H+18}" text-anchor="middle" fill="#000">${fr(t,2)}</text>`;});
+  s+=`<text x="${L+pw/2}" y="${top+H+38}" text-anchor="middle" fill="#000">Mean correlation estimate</text>`;
+  const ly=top+H+62;s+=`<rect x="${L}" y="${ly-6}" width="12" height="12" fill="#d9d9d9"/><text x="${L+18}" y="${ly+4}" fill="#000">Within 20%</text><rect x="${L+100}" y="${ly-6}" width="12" height="12" fill="#f0f0f0" stroke="#bbb"/><text x="${L+118}" y="${ly+4}" fill="#000">20–40%</text><line x1="${L+190}" x2="${L+206}" y1="${ly}" y2="${ly}" stroke="#000" stroke-dasharray="5 3"/><text x="${L+212}" y="${ly+4}" fill="#000">Average adjusted</text>`;
+  return s+`</svg>`;
+}
+function svgToPng(svg,scale=3){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>{const c=document.createElement("canvas");c.width=img.width*scale;c.height=img.height*scale;const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(new Error("png")),"image/png");};img.onerror=()=>rej(new Error("svg"));img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);});}
+function dl(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},2000);}
+function flash(btn,msg,bad){const o=btn.dataset.label||btn.textContent;btn.dataset.label=o;btn.textContent=msg;btn.classList.toggle("bad",!!bad);setTimeout(()=>{btn.textContent=o;btn.classList.remove("bad");},bad?3200:1600);}
+async function copyHtml(el,text,btn){
+  const html=el.outerHTML;
+  try{if(!window.ClipboardItem)throw 0;await navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([html],{type:"text/html"}),"text/plain":new Blob([text],{type:"text/plain"})})]);flash(btn,"Copied");return;}catch(e){}
+  try{const r=document.createRange();r.selectNode(el);const s=getSelection();s.removeAllRanges();s.addRange(r);const ok=document.execCommand("copy");s.removeAllRanges();if(ok){flash(btn,"Copied");return;}}catch(e){}
+  const r=document.createRange();r.selectNode(el);const s=getSelection();s.removeAllRanges();s.addRange(r);flash(btn,"Selected: press Ctrl+C (⌘C)",true);
+}
+async function copyImg(svg,btn){try{if(!window.ClipboardItem)throw 0;await navigator.clipboard.write([new ClipboardItem({"image/png":svgToPng(svg)})]);flash(btn,"Copied");}catch(e){flash(btn,"Copying images isn’t supported here; use Download PNG",true);}}
+function buildReport(){
+  const R=uLast,out=$("u-reportOut");if(!R)return;
+  const T=R.T,A=R.art,H=R.het,B=R.bias,pct=x=>isFinite(x)?(x>999?">999":x.toFixed(0))+"%":"–";
+  const tables=[],figs=[];
+  // Table 1
+  const r1=[{group:"Observed correlations"},
+    ["Number of studies (<i>k</i>)",String(R.S.k)],["Total sample size (<i>N</i>)",fi(R.S.SN)],
+    ["Sample-size weighted mean <i>r</i>",fr(T.rw)],["Unweighted mean <i>r</i>",fr(T.rraw)],["95% CI for weighted mean <i>r</i>",br(T.ci[0],T.ci[1],3)],
+    ["Observed variance (<i>S</i>²<sub><i>r</i></sub>)",fv(T.S2r)],["Sampling error variance (<i>S</i>²<sub><i>e</i></sub>)",fv(T.S2e)],["Residual variance (<i>S</i>²<sub>ρ</sub>)",fv(T.S2p)],
+    ["<i>SD</i><sub>ρ</sub>",fr(T.SDp)],["80% credibility interval",br(T.cv[0],T.cv[1],3)],["% variance due to sampling error",pct(T.pct)]];
+  if(A)r1.push({group:"Corrected for unreliability (artifact distributions)"},["Mean √<i>r<sub>xx</sub></i> (studies reporting)",`${fr(A.abar)} (${A.nx})`],["Mean √<i>r<sub>yy</sub></i> (studies reporting)",`${fr(A.bbar)} (${A.ny})`],["Compound attenuation factor (<i>A</i>)",fr(A.A)],["Mean corrected correlation (ρ̄)",fr(A.rho)],["<i>SD</i><sub>ρ</sub> (corrected)",fr(A.SDrho)],["80% credibility interval (corrected)",br(A.rho-1.2816*A.SDrho,A.rho+1.2816*A.SDrho,3)],["% variance due to artifacts",pct(A.pa)]);
+  tables.push(apaTable(tables.length+1,"Meta-Analytic Results",["Statistic","Value"],r1,`CI = confidence interval. Computations follow Hunter and Schmidt (2004).${A?" Corrections for unreliability use the artifact distribution method; values in parentheses are the numbers of studies reporting each reliability.":""}`));
+  // Table 2
+  tables.push(apaTable(tables.length+1,"Heterogeneity Statistics",["Statistic","Value"],[
+    ["<i>Q</i> (<i>df</i>)",`${H.Q.toFixed(2)} (${H.df})`],["<i>p</i>",H.p<0.001?"< .001":fr(H.p,3)],["<i>I</i>²",`${(100*H.I2).toFixed(1)}%`],["<i>H</i>²",H.H2.toFixed(2)],
+    ["τ² (Fisher's <i>z</i>)",fv(H.tau2)],["τ (Fisher's <i>z</i>)",fr(H.tau)],["80% prediction interval",br(H.pi[0],H.pi[1],3)],
+    ["<i>SD</i><sub>ρ</sub> (Hunter &amp; Schmidt)",fr(T.SDp)],["80% credibility interval",br(T.cv[0],T.cv[1],3)]],
+    "<i>Q</i>, <i>I</i>², <i>H</i>², τ², and the prediction interval are computed on Fisher's <i>z</i> with weights <i>N</i> − 3 (DerSimonian–Laird estimator); the prediction interval is back-transformed to <i>r</i>. Interpretation follows Kepes, Wang, and Cortina (2024)."));
+  (R.mods||[]).forEach(m=>tables.push(modTable(m,tables.length+1)));
+  if(R.joint)tables.push(jointTable(R.joint,tables.length+1));
+  // Table 3
+  if(B){const sgn=(a)=>`${a.val<B.naive?"−":"+"}${pct(a.sev.pct*100)}`;
+    const rows=[["Naive mean, random effects",fr(B.naive),"–","–","–"],["Naive mean, fixed effects",fr(B.naiveFE),"–","–","–"]];
+    B.adj.forEach(a=>{const ki=a.short==="T&F FE"?String(B.tfF.k0):a.short==="T&F RE"?String(B.tfR.k0):"–";rows.push([a.name+(a.short==="PET-PEESE"?(B.usePeese?" (PEESE)":" (PET)"):""),fr(a.val),ki,sgn(a),a.sev.lab]);});
+    rows.push({group:"Tests of funnel plot asymmetry"});
+    rows.push(["Begg and Mazumdar rank correlation",`τ = ${fr(B.bg.tau,3)}`,"–",`<i>p</i> ${B.bg.p<0.001?"< .001":"= "+fr(B.bg.p,3)}`,B.bg.p<0.05?"Asymmetry":"No asymmetry"]);
+    rows.push(["Egger's regression test",`<i>b</i><sub>0</sub> = ${B.eg.b0.toFixed(2)}`,"–",`<i>t</i> = ${B.egT.toFixed(2)}, <i>p</i> ${B.egP<0.001?"< .001":"= "+fr(B.egP,3)}`,B.egP<0.05?"Asymmetry":"No asymmetry"]);
+    tables.push(apaTable(tables.length+1,"Publication Bias Analyses",["Method","Estimate","<i>k</i> imputed","Change from naive","Severity"],rows,
+      `Bias-adjusted estimates are compared with the naive random-effects mean. Severity follows Kepes, Wang, and Cortina (2023): minimal (< 20% change, or a change of .02 or less), moderate (20%–40%), severe (> 40%). Average adjusted estimate = ${fr(B.avgAdj)}; baseline range = ${fr(B.baseR)}; maximum range = ${fr(B.maxR)}; average range = ${fr(B.avgR)}. Selection models use Vevea and Woods's (2005) a priori weights.`));
+    figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval."});
+    (R.mods||[]).forEach(m=>figs.push(modFig(m)));
+    figs.push({title:"Contour-Enhanced Funnel Plot With Trim-and-Fill Imputations",svg:figFunnel(R),note:"Filled circles are observed studies; open circles are studies imputed by trim and fill (random effects). The solid line is the naive mean, and the dashed line is the trim-and-fill adjusted mean. Shading marks regions of statistical significance."});
+    figs.push({title:"Cumulative Meta-Analysis by Precision",svg:figCumulative(R),note:"Studies are added from most to least precise. The line shows the cumulative fixed-effect mean correlation; the shaded band is its 95% confidence interval. The dashed line marks the mean based on all studies."});
+    figs.push({title:"Naive and Bias-Adjusted Mean Estimates",svg:figTriangulation(R),note:"The open circle is the naive random-effects mean; filled circles are bias-adjusted estimates. Shaded bands mark changes of less than 20% and of 20%–40% from the naive mean."});
+  }else{figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval."});(R.mods||[]).forEach(m=>figs.push(modFig(m)));}
+  let h=`<div class="rep-grid">`;
+  tables.forEach((t,i)=>{h+=`<div class="rep-item"><div class="paper" id="u-t${i}">${t.html}</div><div class="btns"><button type="button" data-act="ct" data-i="${i}">Copy table</button><button type="button" data-act="dt" data-i="${i}">Download CSV</button></div></div>`;});
+  figs.forEach((f,i)=>{h+=`<div class="rep-item"><div class="paper" id="u-f${i}"><p style="${TS}font-weight:bold;margin:0">Figure ${i+1}</p><p style="${TS}font-style:italic;margin:0 0 8px">${f.title}</p><div class="figbox">${f.svg}</div><p style="${TS}margin:8px 0 0"><i>Note.</i> ${f.note}</p></div><div class="btns"><button type="button" data-act="cf" data-i="${i}">Copy figure</button><button type="button" data-act="pf" data-i="${i}">Download PNG</button><button type="button" data-act="sf" data-i="${i}">Download SVG</button><button type="button" data-act="cn" data-i="${i}">Copy caption</button></div></div>`;});
+  h+=`</div>`;
+  if(!B)h=`<p class="cap">Publication bias tables and figures need at least 5 studies.</p>`+h;
+  h+=`<p class="cap" style="margin-top:12px">If a download does nothing, your browser or the page hosting this tool may be blocking downloads; use the copy buttons instead, or open the tool in its own browser tab.</p>`;
+  out.innerHTML=h;
+  out.onclick=e=>{const b=e.target.closest("button[data-act]");if(!b)return;const i=+b.dataset.i,act=b.dataset.act;
+    if(act==="ct"){const t=tables[i];copyHtml($("u-t"+i).querySelector(".apa"),t.csv.replace(/,/g,"\t"),b);}
+    else if(act==="dt"){dl(new Blob(["﻿"+tables[i].csv],{type:"text/csv"}),`meta-analysis-table-${tables[i].num}.csv`);flash(b,"Downloading");}
+    else if(act==="cf")copyImg(figs[i].svg,b);
+    else if(act==="pf")svgToPng(figs[i].svg).then(bl=>{dl(bl,`meta-analysis-figure-${i+1}.png`);flash(b,"Downloading");}).catch(()=>flash(b,"Could not create PNG",true));
+    else if(act==="sf"){dl(new Blob([figs[i].svg],{type:"image/svg+xml"}),`meta-analysis-figure-${i+1}.svg`);flash(b,"Downloading");}
+    else if(act==="cn"){const el=$("u-f"+i),txt=`Figure ${i+1}\n${figs[i].title}\nNote. ${strip(figs[i].note)}`;const tmp=document.createElement("div");tmp.innerHTML=`<p style="${TS}font-weight:bold;margin:0">Figure ${i+1}</p><p style="${TS}font-style:italic;margin:0">${figs[i].title}</p><p style="${TS}margin:0"><i>Note.</i> ${figs[i].note}</p>`;tmp.style.position="fixed";tmp.style.left="-9999px";document.body.appendChild(tmp);copyHtml(tmp,txt,b).finally(()=>setTimeout(()=>tmp.remove(),500));}
+  };
+  $("u-makeReport").textContent="Update tables and figures";
+}
+$("u-makeReport").addEventListener("click",buildReport);
+/* ---------------- Moderator computations ---------------- */
+function subgroupAnalysis(st,order){
+  const groups=order.map(name=>{const s=st.filter(d=>d.g===name);const S={k:s.length,N:s.map(d=>d.N),r:s.map(d=>d.r)};S.SN=sum(S.N);const T=s.length?stats1(S):null;
+    const z=s.map(d=>Math.atanh(d.r)),w=s.map(d=>d.N-3),W=sum(w),zb=W?sum(z.map((v,i)=>w[i]*v))/W:NaN,Qw=sum(z.map((v,i)=>w[i]*(v-zb)**2)),se=Math.sqrt(1/W);
+    return {name,k:s.length,SN:S.SN,T,W,zb,Qw,ci:[Math.tanh(zb-1.96*se),Math.tanh(zb+1.96*se)],st:s};}).filter(g=>g.k>0);
+  const all={k:st.length,N:st.map(d=>d.N),r:st.map(d=>d.r)};all.SN=sum(all.N);const Tall=stats1(all);
+  const Wt=sum(groups.map(g=>g.W)),zbar=sum(groups.map(g=>g.W*g.zb))/Wt,QB=sum(groups.map(g=>g.W*(g.zb-zbar)**2)),df=groups.length-1;
+  const QW=sum(groups.map(g=>g.Qw)),dfW=st.length-groups.length,seAll=Math.sqrt(1/Wt);
+  return {groups,Tall,SN:all.SN,k:st.length,QB,df,pB:df>0?chiP(QB,df):1,QW,dfW,pW:dfW>0?chiP(QW,dfW):1,ciAll:[Math.tanh(zbar-1.96*seAll),Math.tanh(zbar+1.96*seAll)]};
+}
+function metaReg(st){
+  const k=st.length,x=st.map(d=>d.x),z=st.map(d=>Math.atanh(d.r)),v=st.map(d=>1/(d.N-3));
+  const fit=w=>{const S0=sum(w),S1=sum(w.map((a,i)=>a*x[i])),S2=sum(w.map((a,i)=>a*x[i]*x[i])),Sy=sum(w.map((a,i)=>a*z[i])),Sxy=sum(w.map((a,i)=>a*x[i]*z[i])),det=S0*S2-S1*S1;
+    const b1=(S0*Sxy-S1*Sy)/det,b0=(Sy-b1*S1)/S0;return {b0,b1,S0,S1,S2,det,v0:S2/det,v1:S0/det};};
+  const wF=v.map(a=>1/a),fe=fit(wF),QE=sum(z.map((zz,i)=>wF[i]*(zz-fe.b0-fe.b1*x[i])**2));
+  const M00=sum(wF.map(a=>a*a)),M01=sum(wF.map((a,i)=>a*a*x[i])),M11=sum(wF.map((a,i)=>a*a*x[i]*x[i]));
+  const C=fe.S0-(fe.S2*M00-2*fe.S1*M01+fe.S0*M11)/fe.det,t2=Math.max(0,(QE-(k-2))/C);
+  const wR=v.map(a=>1/(a+t2)),re=fit(wR),se1=Math.sqrt(re.v1),se0=Math.sqrt(re.v0),zs=re.b1/se1,p=2*(1-normCdf(Math.abs(zs)));
+  const t2tot=dlTau2(z,v),R2=t2tot>0?Math.max(0,Math.min(1,(t2tot-t2)/t2tot)):0,xm=sum(x)/k;
+  const rAt=xx=>Math.tanh(re.b0+re.b1*xx),slopeR=re.b1*(1-rAt(xm)**2);
+  const N=st.map(d=>d.N),SN=sum(N),rw=sum(st.map(d=>d.N*d.r))/SN;
+  return {k,b0:re.b0,b1:re.b1,se0,se1,zs,p,ci:[re.b1-1.96*se1,re.b1+1.96*se1],ci0:[re.b0-1.96*se0,re.b0+1.96*se0],QM:zs*zs,QE,dfE:k-2,pE:chiP(QE,Math.max(1,k-2)),t2,t2tot,R2,xm,xr:[Math.min(...x),Math.max(...x)],rAt,slopeR,rw,SN};
+}
+const pTxt=p=>p<0.001?"p < .001":"p = "+fr(p,3);
+function subTableHTML(R,unit){
+  const pc=x=>isFinite(x)?(x>999?">999":x.toFixed(0))+"%":"–";
+  const row=(name,k,N,T,ci,cls)=>`<tr${cls?` class="${cls}"`:""}><td style="text-align:left">${name}</td><td class="num">${k}</td><td class="num">${fi(N)}</td><td class="num">${fr(T.rw)}</td><td class="num">[${fr(ci[0],2)}, ${fr(ci[1],2)}]</td><td class="num">${fv(T.S2r)}</td><td class="num">${fv(T.S2e)}</td><td class="num">${fr(T.SDp)}</td><td class="num">${pc(T.pct)}</td><td class="num">[${fr(T.cv[0],2)}, ${fr(T.cv[1],2)}]</td></tr>`;
+  const ov="<span class='ov'>r</span>";
+  let h=`<thead><tr><th style="text-align:left">${unit||"Subgroup"}</th><th>k</th><th>N</th><th>${ov}</th><th>95% CI</th><th>S²ᵣ</th><th>S²ₑ</th><th>SDρ</th><th>% var. sampling error</th><th>80% credibility</th></tr></thead><tbody>`;
+  R.groups.forEach(g=>{h+=row(g.name,g.k,g.SN,g.T,[g.T.ci[0],g.T.ci[1]]);});
+  h+=row("All studies",R.k,R.SN,R.Tall,[R.Tall.ci[0],R.Tall.ci[1]],"hl");
+  h+=`<tr><td colspan="10" style="text-align:left;font-size:13px">Q<sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, ${pTxt(R.pB)} &nbsp;·&nbsp; Q<sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, ${pTxt(R.pW)}</td></tr></tbody>`;
+  return h;
+}
+const GCOL=["var(--accent)","var(--raw)","var(--ok)","var(--muted)","var(--fg)","var(--accent)"];
+function drawSubgroupPlot(tid,R){
+  const G=R.groups,maxN=Math.max(...G.flatMap(g=>g.st.map(d=>d.N))),allr=G.flatMap(g=>g.st.map(d=>d.r));
+  let lo=Math.floor((Math.min(...allr)-0.05)*10)/10,hi=Math.ceil((Math.max(...allr)+0.05)*10)/10;lo=Math.max(-1,lo);hi=Math.min(1,hi);
+  const W=720,L=150,Rr=20,top=10,lh=74,H=G.length*lh,pw=W-L-Rr,x=v=>L+(v-lo)/(hi-lo)*pw;
+  let s=`<svg viewBox="0 0 ${W} ${top+H+44}" xmlns="${NS}" role="img" aria-label="Correlations by subgroup">`;
+  niceTicks(lo,hi).forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${top+H}" class="grid"/><text x="${x(t)}" y="${top+H+18}" text-anchor="middle" class="tick">${fr(t,1).replace(/^\.0$/,"0")}</text>`;});
+  s+=`<line x1="${L}" x2="${W-Rr}" y1="${top+H}" y2="${top+H}" class="ax"/><text x="${W-Rr}" y="${top+H+36}" text-anchor="end" class="lab-m">Observed correlation (r)</text>`;
+  G.forEach((g,gi)=>{const y0=top+gi*lh,yc=y0+lh/2,col=GCOL[gi%GCOL.length];
+    if(gi)s+=`<line x1="${L-140}" x2="${W-Rr}" y1="${y0}" y2="${y0}" stroke="var(--line)"/>`;
+    s+=`<text x="${L-12}" y="${yc-2}" text-anchor="end" class="lab-t">${esc(g.name)}</text><text x="${L-12}" y="${yc+14}" text-anchor="end" class="lab-m">k = ${g.k}</text>`;
+    g.st.forEach((d,i)=>{const j=(((i+1)*0.6180339887)%1-0.5)*lh*0.62,rad=2.5+7*Math.sqrt(d.N/maxN);s+=`<circle cx="${x(d.r).toFixed(1)}" cy="${(yc+j).toFixed(1)}" r="${rad.toFixed(1)}" fill="${col}" fill-opacity=".22" stroke="${col}" stroke-width="1"><title>${esc(g.name)}: N = ${d.N}, r = ${fr(d.r)}</title></circle>`;});
+    s+=`<line x1="${x(g.T.rw)}" x2="${x(g.T.rw)}" y1="${y0+6}" y2="${y0+lh-6}" stroke="var(--fg)" stroke-width="2"/><text x="${x(g.T.rw)+5}" y="${y0+16}" class="lab-t">${fr(g.T.rw)}</text>`;});
+  s+=`<line x1="${x(R.Tall.rw)}" x2="${x(R.Tall.rw)}" y1="${top}" y2="${top+H}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  $(tid).innerHTML=s+`</svg>`;
+}
+function drawRegPlot(tid,st,R,xlab){
+  const maxN=Math.max(...st.map(d=>d.N)),rs=st.map(d=>d.r);
+  let lo=Math.floor((Math.min(...rs)-0.05)*10)/10,hi=Math.ceil((Math.max(...rs)+0.05)*10)/10;lo=Math.max(-1,lo);hi=Math.min(1,hi);
+  const xr=R.xr,pad=(xr[1]-xr[0])*0.05||1,x0=xr[0]-pad,x1=xr[1]+pad;
+  const W=720,L=56,Rr=20,top=14,H=320,pw=W-L-Rr,X=v=>L+(v-x0)/(x1-x0)*pw,Y=v=>top+(hi-v)/(hi-lo)*H;
+  let s=`<svg viewBox="0 0 ${W} ${top+H+48}" xmlns="${NS}" role="img" aria-label="Meta-regression bubble plot">`;
+  niceTicks(lo,hi).forEach(t=>{s+=`<line x1="${L}" x2="${W-Rr}" y1="${Y(t)}" y2="${Y(t)}" class="grid"/><text x="${L-8}" y="${Y(t)+4}" text-anchor="end" class="tick">${fr(t,1).replace(/^\.0$/,"0")}</text>`;});
+  const xt=xTicks(x0,x1);xt.forEach(t=>{s+=`<line x1="${X(t)}" x2="${X(t)}" y1="${top+H}" y2="${top+H+5}" class="ax"/><text x="${X(t)}" y="${top+H+18}" text-anchor="middle" class="tick">${fmtX(t)}</text>`;});
+  s+=`<line x1="${L}" x2="${W-Rr}" y1="${top+H}" y2="${top+H}" class="ax"/><line x1="${L}" x2="${L}" y1="${top}" y2="${top+H}" class="ax"/>`;
+  s+=`<text x="${L+pw/2}" y="${top+H+38}" text-anchor="middle" class="lab-m">${esc(xlab)}</text><text transform="translate(14 ${top+H/2}) rotate(-90)" text-anchor="middle" class="lab-m">Observed correlation (r)</text>`;
+  s+=`<line x1="${L}" x2="${W-Rr}" y1="${Y(R.rw)}" y2="${Y(R.rw)}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  st.slice().sort((a,b)=>b.N-a.N).forEach(d=>{const rad=3+10*Math.sqrt(d.N/maxN);s+=`<circle cx="${X(d.x).toFixed(1)}" cy="${Y(d.r).toFixed(1)}" r="${rad.toFixed(1)}" fill="var(--accent)" fill-opacity=".2" stroke="var(--accent)" stroke-width="1"><title>${esc(d.label||"")} moderator = ${fmtX(d.x)}, N = ${d.N}, r = ${fr(d.r)}</title></circle>`;});
+  let pts=[];for(let j=0;j<=40;j++){const xv=xr[0]+(xr[1]-xr[0])*j/40;pts.push(`${X(xv).toFixed(1)},${Y(Math.max(lo,Math.min(hi,R.rAt(xv)))).toFixed(1)}`);}
+  s+=`<polyline points="${pts.join(" ")}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+  $(tid).innerHTML=s+`</svg>`;
+}
+function xTicks(a,b){const span=b-a,raw=span/6,mag=Math.pow(10,Math.floor(Math.log10(raw))),st=[1,2,2.5,5,10].map(m=>m*mag).find(v=>v>=raw)||raw;const t=[];for(let v=Math.ceil(a/st-1e-9)*st;v<=b+1e-9;v+=st)t.push(+v.toFixed(10));return t;}
+function fmtX(v){return Math.abs(v)>=100||Number.isInteger(+v.toFixed(6))?String(+v.toFixed(6)):String(+v.toFixed(2));}
+function regLedgerHTML(R,unit){
+  const rows=[["Slope, Fisher&rsquo;s z per "+unit,`b₁ = <b>${R.b1.toFixed(4)}</b>, SE = ${R.se1.toFixed(4)}, 95% CI [${R.ci[0].toFixed(4)}, ${R.ci[1].toFixed(4)}]`],
+    ["Test of the slope",`z = ${R.zs.toFixed(2)}, <b>${pTxt(R.p)}</b>; Q<sub>M</sub>(1) = ${R.QM.toFixed(2)}`],
+    ["Approximate change in r per "+unit+" (at the mean)",`<b>${R.slopeR>=0?"+":minus}${fr(Math.abs(R.slopeR),3)}</b>`],
+    ["Predicted r across the observed range",`${fr(R.rAt(R.xr[0]))} at ${fmtX(R.xr[0])} to ${fr(R.rAt(R.xr[1]))} at ${fmtX(R.xr[1])}`],
+    ["Between-study variance (Fisher&rsquo;s z)",`τ² without moderator = ${fv(R.t2tot)}; τ²<sub>res</sub> with moderator = <b>${fv(R.t2)}</b>`],
+    ["Variance explained by the moderator",`R² = <b>${(100*R.R2).toFixed(0)}%</b>`],
+    ["Residual heterogeneity",`Q<sub>E</sub>(${R.dfE}) = ${R.QE.toFixed(2)}, ${pTxt(R.pE)}`]];
+  return rows.map(([l,e])=>`<div class="row"><span class="lbl">${l}</span><span class="eq">${e}</span></div>`).join("");
+}
+/* ---------------- Moderators analyzed together ---------------- */
+let uModMode="separate",uJoint=null,uWasExample=true;
+function matInv(A){const n=A.length,M=A.map((r,i)=>r.concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+  for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;if(Math.abs(M[p][c])<1e-12)return null;[M[c],M[p]]=[M[p],M[c]];
+    const d=M[c][c];for(let j=0;j<2*n;j++)M[c][j]/=d;for(let r=0;r<n;r++)if(r!==c){const f=M[r][c];if(f)for(let j=0;j<2*n;j++)M[r][j]-=f*M[c][j];}}
+  return M.map(r=>r.slice(n));}
+function modType(vals){const u=[...new Set(vals.map(String))];return vals.every(v=>isFinite(Number(v)))&&u.length>4?"cont":"cat";}
+function multiMetaReg(data,names){
+  const rows=data.filter(d=>d.mods&&names.every((_,j)=>d.mods[j]!==null&&d.mods[j]!==undefined&&d.mods[j]!==""));
+  const dropped=data.length-rows.length;
+  const specs=names.map((name,j)=>{const vals=rows.map(d=>d.mods[j]),type=modType(vals);
+    if(type==="cont")return {name,type,cols:[{label:name,f:d=>Number(d.mods[j])}]};
+    const allNum=vals.every(v=>isFinite(Number(v))),lv=[...new Set(vals.map(String))].sort((a,b)=>allNum?Number(a)-Number(b):a.localeCompare(b));
+    return {name,type,ref:lv[0],levels:lv,cols:lv.slice(1).map(l=>({label:`${name}: ${l} (vs. ${lv[0]})`,f:d=>String(d.mods[j])===l?1:0}))};});
+  const cols=[{label:"Intercept",f:()=>1}].concat(specs.flatMap(s=>s.cols)),p=cols.length,k=rows.length;
+  if(specs.some(s=>s.type==="cat"&&s.levels.length<2))return {err:"Each moderator needs at least two different values among the studies with complete data."};
+  if(specs.some(s=>s.type==="cat"&&s.levels.length>8))return {err:"A categorical moderator has more than 8 categories; enter continuous moderators as numbers."};
+  if(k<p+2)return {err:`Analyzing these moderators together requires at least ${p+2} studies with values on every moderator; ${k} ${k===1?"study has":"studies have"} complete data.`};
+  const X=rows.map(d=>cols.map(c=>c.f(d))),z=rows.map(d=>Math.atanh(d.r)),v=rows.map(d=>1/(d.N-3));
+  const fit=w=>{const A=cols.map((_,a)=>cols.map((_,b)=>sum(X.map((x,i)=>w[i]*x[a]*x[b])))),Ai=matInv(A);if(!Ai)return null;const g=cols.map((_,a)=>sum(X.map((x,i)=>w[i]*x[a]*z[i])));return {Ai,b:Ai.map(r=>sum(r.map((q,j)=>q*g[j])))};};
+  const wF=v.map(a=>1/a),fe=fit(wF);if(!fe)return {err:"The moderators are perfectly redundant (for example, one category always goes with one value of another moderator), so they cannot be analyzed together."};
+  const res=z.map((zz,i)=>zz-sum(X[i].map((x,a)=>x*fe.b[a]))),QE=sum(res.map((e,i)=>wF[i]*e*e));
+  const M=cols.map((_,a)=>cols.map((_,b)=>sum(X.map((x,i)=>wF[i]*wF[i]*x[a]*x[b])))),tr=sum(cols.map((_,a)=>sum(cols.map((_,b)=>fe.Ai[a][b]*M[b][a]))));
+  const C=sum(wF)-tr,t2=Math.max(0,(QE-(k-p))/C);
+  const wR=v.map(a=>1/(a+t2)),re=fit(wR);
+  const coef=cols.map((c,a)=>{const se=Math.sqrt(re.Ai[a][a]),zs=re.b[a]/se;return {label:c.label,b:re.b[a],se,zs,p:2*(1-normCdf(Math.abs(zs))),ci:[re.b[a]-1.96*se,re.b[a]+1.96*se]};});
+  const wald=idx=>{const V=idx.map(a=>idx.map(b=>re.Ai[a][b])),Vi=matInv(V);if(!Vi)return {Q:NaN,df:idx.length,p:NaN};const bb=idx.map(a=>re.b[a]);const Q=sum(bb.map((x,i)=>x*sum(bb.map((y,j)=>Vi[i][j]*y))));return {Q,df:idx.length,p:chiP(Q,idx.length)};};
+  const all=wald(cols.map((_,a)=>a).slice(1));let off=1;
+  const blocks=specs.map(s=>{const idx=s.cols.map((_,i)=>off+i);off+=s.cols.length;return {name:s.name,type:s.type,ref:s.ref,...wald(idx)};});
+  const t2tot=dlTau2(z,v),R2=t2tot>0?Math.max(0,Math.min(1,(t2tot-t2)/t2tot)):0;
+  return {k,p,dropped,coef,QM:all.Q,dfM:all.df,pM:all.p,QE,dfE:k-p,pE:chiP(QE,Math.max(1,k-p)),t2,t2tot,R2,blocks,names};
+}
+function jointHTML(J){
+  const rows=J.coef.map(c=>`<tr><td style="text-align:left">${esc(c.label)}</td><td class="num">${c.b.toFixed(4)}</td><td class="num">${c.se.toFixed(4)}</td><td class="num">[${c.ci[0].toFixed(4)}, ${c.ci[1].toFixed(4)}]</td><td class="num">${c.zs.toFixed(2)}</td><td class="num">${c.p<0.001?"< .001":fr(c.p,3)}</td></tr>`).join("");
+  const blk=J.blocks.filter(b=>b.df>1).map(b=>`${esc(b.name)}: Q(${b.df}) = ${b.Q.toFixed(2)}, ${pTxt(b.p)}`).join("; ");
+  return `<thead><tr><th style="text-align:left">Predictor</th><th>b</th><th>SE</th><th>95% CI</th><th>z</th><th>p</th></tr></thead><tbody>${rows}<tr><td colspan="6" style="text-align:left;font-size:13px">Q<sub>M</sub>(${J.dfM}) = ${J.QM.toFixed(2)}, ${pTxt(J.pM)} &nbsp;·&nbsp; Q<sub>E</sub>(${J.dfE}) = ${J.QE.toFixed(2)}, ${pTxt(J.pE)} &nbsp;·&nbsp; τ²<sub>res</sub> = ${fv(J.t2)} &nbsp;·&nbsp; R² = ${(100*J.R2).toFixed(0)}%${blk?` &nbsp;·&nbsp; ${blk}`:""}</td></tr></tbody>`;
+}
+function jointTable(J,num){
+  const rows=J.coef.map(c=>[esc(c.label).replace(/^Intercept$/,"Intercept (Fisher's <i>z</i>)"),c.b.toFixed(4),c.se.toFixed(4),`[${c.ci[0].toFixed(4)}, ${c.ci[1].toFixed(4)}]`,c.zs.toFixed(2),c.p<0.001?"< .001":fr(c.p,3)]);
+  const blk=J.blocks.filter(b=>b.df>1).map(b=>`${esc(b.name)}, <i>Q</i>(${b.df}) = ${b.Q.toFixed(2)}, <i>p</i> ${b.p<0.001?"< .001":"= "+fr(b.p,3)}`).join("; ");
+  return apaTable(num,"Multiple Meta-Regression of Correlations on Moderators",["Predictor","<i>b</i>","<i>SE</i>","95% CI","<i>z</i>","<i>p</i>"],rows,
+    `Mixed-effects meta-regression on Fisher's <i>z</i> with all moderators entered simultaneously (<i>k</i> = ${J.k}${J.dropped?`; ${J.dropped} studies with missing moderator values were excluded`:""}). Categorical moderators are dummy coded, with the first category as the reference. <i>Q</i><sub>M</sub>(${J.dfM}) = ${J.QM.toFixed(2)}, <i>p</i> ${J.pM<0.001?"< .001":"= "+fr(J.pM,3)}; <i>Q</i><sub>E</sub>(${J.dfE}) = ${J.QE.toFixed(2)}, <i>p</i> ${J.pE<0.001?"< .001":"= "+fr(J.pE,3)}; τ²<sub>res</sub> = ${fv(J.t2)}; <i>R</i>² = ${(100*J.R2).toFixed(0)}%.${blk?` Omnibus tests for multi-category moderators: ${blk}.`:""}`);
+}
+function ownModerators(data,names){
+  const list=$("u-modlist"),msg=$("u-modmsg");list.innerHTML="";
+  if(!names.length){msg.innerHTML=`<p class="cap">To test moderators, add one or more columns with a header row naming them (for example, <strong>setting</strong> or <strong>% women</strong>). A column of categories (Lab, Field) is analyzed by subgroup; a column of numbers is analyzed by meta-regression.</p>`;return [];}
+  uJoint=null;
+  if(names.length>1){
+    msg.innerHTML=`<div class="modmode" role="radiogroup" aria-label="How to analyze the moderators"><label><input type="radio" name="u-modmode" value="separate"${uModMode==="separate"?" checked":""}> Analyze each moderator separately</label><label><input type="radio" name="u-modmode" value="joint"${uModMode==="joint"?" checked":""}> Analyze all moderators together (multiple meta-regression)</label></div>`+
+      (uModMode==="separate"?`<p class="cap">${names.length} moderator columns were found, and each is analyzed on its own. Moderators are often related to one another (for example, studies in one setting may also include more women), so a moderator that looks important on its own may partly reflect another. Analyzing them together shows the effect of each one while holding the others constant.</p>`
+      :`<p class="cap">All ${names.length} moderators are entered simultaneously in a mixed-effects meta-regression on Fisher&rsquo;s z, so each coefficient shows the effect of that moderator while holding the others constant. Categorical moderators are dummy coded, with the first category (alphabetically) as the reference. This requires more studies than separate analyses, and only studies with values on every moderator are used.</p>`);
+    if(uModMode==="joint"){const Jr=multiMetaReg(data,names);
+      if(Jr.err){list.innerHTML=`<p class="cap">${Jr.err}</p>`;return [];}
+      uJoint=Jr;
+      list.innerHTML=`<div class="verdict"><span class="pill ${Jr.pM<0.05?"warn":"ok"}">${Jr.pM<0.05?"Moderators significant as a set":"Moderators not significant as a set"}</span><span>Together the moderators explain ${(100*Jr.R2).toFixed(0)}% of the between-study variance (Q<sub>M</sub>(${Jr.dfM}) = ${Jr.QM.toFixed(2)}, ${pTxt(Jr.pM)}), using ${Jr.k} studies${Jr.dropped?`; ${Jr.dropped} with missing values were left out`:""}.</span></div><div class="tablewrap hetwrap"><table class="modtab">${jointHTML(Jr)}</table></div><p class="cap">Coefficients are in the Fisher&rsquo;s z metric; for correlations of modest size they are close to changes in r.</p>`;
+      return [];}
+  }else msg.innerHTML="";
+  const out=[];
+  names.forEach((name,j)=>{const id="u-mod"+j,blk=document.createElement("div");blk.className="modblock";
+    blk.innerHTML=`<h4 class="sub">${esc(name)}</h4><div id="${id}-msg"></div><div class="plot" id="${id}-plot"></div><div class="verdict" id="${id}-verdict"></div><div class="tablewrap hetwrap" id="${id}-tw" hidden><table id="${id}-tab" class="modtab"></table></div><div class="ledger" id="${id}-led"></div>`;
+    list.appendChild(blk);
+    const r=analyzeMod(data.map(d=>({N:d.N,r:d.r,label:d.label,mod:d.mods?d.mods[j]:null})),name,id);if(r)out.push(r);});
+  return out;
+}
+function analyzeMod(data,name,id){
+  const msg=$(id+"-msg");
+  const has=data.filter(d=>d.mod!==null&&d.mod!==undefined&&d.mod!=="");
+  if(!has.length){msg.innerHTML=`<p class="cap">No studies have a value for this moderator.</p>`;return null;}
+  const allNum=has.every(d=>isFinite(Number(d.mod))),uniq=[...new Set(has.map(d=>String(d.mod)))];
+  const miss=data.length-has.length,missTxt=miss?` ${miss} stud${miss>1?"ies":"y"} without a value ${miss>1?"are":"is"} left out of this analysis.`:"";
+  if(allNum&&uniq.length>4){
+    const st=has.map(d=>({N:d.N,r:d.r,x:Number(d.mod),label:d.label}));
+    if(st.length<4){msg.innerHTML=`<p class="cap">Meta-regression needs at least 4 studies with values for this moderator.</p>`;return null;}
+    const R=metaReg(st);
+    msg.innerHTML=`<p class="cap">This column is numeric, so it is treated as continuous and tested by mixed-effects meta-regression on Fisher&rsquo;s z.${missTxt}</p>`;
+    drawRegPlot(id+"-plot",st,R,name);
+    $(id+"-verdict").innerHTML=`<span class="pill ${R.p<0.05?"warn":"ok"}">${R.p<0.05?"Significant moderator":"No significant moderation"}</span><span>A one-unit increase in ${esc(name)} changes r by about ${R.slopeR>=0?"+":minus}${fr(Math.abs(R.slopeR),3)} (${pTxt(R.p)}); it explains ${(100*R.R2).toFixed(0)}% of the between-study variance.</span>`;
+    $(id+"-led").innerHTML=regLedgerHTML(R,"unit");
+    return {type:"cont",R,st,name,miss};
+  }
+  const st=has.map(d=>({N:d.N,r:d.r,g:String(d.mod)})),order=uniq.slice().sort((a,b)=>allNum?Number(a)-Number(b):a.localeCompare(b));
+  if(order.length<2){msg.innerHTML=`<p class="cap">This column has only one category, so there is nothing to compare.</p>`;return null;}
+  if(order.length>8){msg.innerHTML=`<p class="cap">This column has ${order.length} categories. Subgroup analysis needs a small number of categories (8 or fewer); if the moderator is continuous, enter it as numbers.</p>`;return null;}
+  const R=subgroupAnalysis(st,order),small=R.groups.filter(g=>g.k<3).map(g=>esc(g.name));
+  msg.innerHTML=`<p class="cap">This column has ${order.length} categories, so it is tested by subgroup analysis.${missTxt}${small.length?` Subgroups with fewer than 3 studies (${small.join(", ")}) give unstable estimates.`:""}</p>`;
+  drawSubgroupPlot(id+"-plot",R);$(id+"-tw").hidden=false;$(id+"-tab").innerHTML=subTableHTML(R,esc(name));
+  $(id+"-verdict").innerHTML=`<span class="pill ${R.pB<0.05?"warn":"ok"}">${R.pB<0.05?"Subgroups differ":"No significant difference"}</span><span>Q<sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, ${pTxt(R.pB)}; Q<sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, ${pTxt(R.pW)}.</span>`;
+  return {type:"cat",R,st,name,miss};
+}
+function figSubgroups(M){
+  const R=M.R,G=R.groups,rows=G.map(g=>({name:g.name,k:g.k,N:g.SN,m:g.T.rw,ci:[g.T.ci[0],g.T.ci[1]]})).concat([{name:"All studies",k:R.k,N:R.SN,m:R.Tall.rw,ci:[R.Tall.ci[0],R.Tall.ci[1]],all:true}]);
+  let lo=Math.min(0,...rows.map(r=>r.ci[0])),hi=Math.max(0,...rows.map(r=>r.ci[1]));lo=Math.max(-1,Math.floor(lo*10)/10);hi=Math.min(1,Math.ceil(hi*10)/10);
+  const W=680,L=200,Rr=160,top=34,rh=26,yAx=top+rh*rows.length+8,H=yAx+48,x=v=>L+(v-lo)/(hi-lo)*(W-L-Rr);
+  let s=svgOpen(W,H,"Subgroup means");
+  s+=`<text x="10" y="18" font-weight="bold" fill="#000">${esc(M.name)}</text><text x="${W-Rr+14}" y="18" font-weight="bold" fill="#000">k   r [95% CI]</text>`;
+  s+=`<line x1="${x(0)}" x2="${x(0)}" y1="${top-6}" y2="${yAx}" stroke="#000" stroke-dasharray="3 3"/>`;
+  rows.forEach((r,i)=>{const y=top+rh*i+rh/2;if(r.all)s+=`<line x1="10" x2="${W-10}" y1="${y-rh/2}" y2="${y-rh/2}" stroke="#999"/>`;
+    s+=`<text x="10" y="${y+4}" fill="#000"${r.all?' font-weight="bold"':""}>${esc(r.name)}</text><line x1="${x(Math.max(lo,r.ci[0]))}" x2="${x(Math.min(hi,r.ci[1]))}" y1="${y}" y2="${y}" stroke="#000"/>`;
+    s+=r.all?`<polygon points="${x(r.ci[0])},${y} ${x(r.m)},${y-7} ${x(r.ci[1])},${y} ${x(r.m)},${y+7}" fill="#000"/>`:`<rect x="${x(r.m)-5}" y="${y-5}" width="10" height="10" fill="#000"/>`;
+    s+=`<text x="${W-Rr+14}" y="${y+4}" fill="#000">${r.k}   ${fr(r.m,2)} ${br(r.ci[0],r.ci[1])}</text>`;});
+  s+=xAxis(x,niceTicks(lo,hi),yAx,"Weighted mean correlation (r)",(L+W-Rr)/2);
+  return s+`</svg>`;
+}
+function figBubble(M){
+  const st=M.st,R=M.R,maxN=Math.max(...st.map(d=>d.N)),rs=st.map(d=>d.r);
+  let lo=Math.floor((Math.min(...rs)-0.05)*10)/10,hi=Math.ceil((Math.max(...rs)+0.05)*10)/10;lo=Math.max(-1,lo);hi=Math.min(1,hi);
+  const xr=R.xr,pad=(xr[1]-xr[0])*0.05||1,x0=xr[0]-pad,x1=xr[1]+pad,W=620,L=64,Rr=20,top=16,H=340,pw=W-L-Rr,X=v=>L+(v-x0)/(x1-x0)*pw,Y=v=>top+(hi-v)/(hi-lo)*H;
+  let s=svgOpen(W,top+H+52,"Meta-regression bubble plot");
+  s+=`<line x1="${L}" x2="${L+pw}" y1="${top+H}" y2="${top+H}" stroke="#000"/><line x1="${L}" x2="${L}" y1="${top}" y2="${top+H}" stroke="#000"/>`;
+  niceTicks(lo,hi).forEach(t=>{s+=`<line x1="${L-5}" x2="${L}" y1="${Y(t)}" y2="${Y(t)}" stroke="#000"/><text x="${L-8}" y="${Y(t)+4}" text-anchor="end" fill="#000">${fr(t,1).replace(/^\.0$/,"0")}</text>`;});
+  xTicks(x0,x1).forEach(t=>{s+=`<line x1="${X(t)}" x2="${X(t)}" y1="${top+H}" y2="${top+H+5}" stroke="#000"/><text x="${X(t)}" y="${top+H+18}" text-anchor="middle" fill="#000">${fmtX(t)}</text>`;});
+  s+=`<text x="${L+pw/2}" y="${top+H+40}" text-anchor="middle" fill="#000">${esc(M.name)}</text><text transform="translate(16 ${top+H/2}) rotate(-90)" text-anchor="middle" fill="#000">Correlation (r)</text>`;
+  st.slice().sort((a,b)=>b.N-a.N).forEach(d=>{const rad=3+10*Math.sqrt(d.N/maxN);s+=`<circle cx="${X(d.x).toFixed(1)}" cy="${Y(d.r).toFixed(1)}" r="${rad.toFixed(1)}" fill="#fff" fill-opacity=".6" stroke="#000"/>`;});
+  let pts=[];for(let j=0;j<=40;j++){const xv=xr[0]+(xr[1]-xr[0])*j/40;pts.push(`${X(xv).toFixed(1)},${Y(Math.max(lo,Math.min(hi,R.rAt(xv)))).toFixed(1)}`);}
+  s+=`<polyline points="${pts.join(" ")}" fill="none" stroke="#000" stroke-width="2"/>`;
+  return s+`</svg>`;
+}
+const cap1=t=>t.charAt(0).toUpperCase()+t.slice(1);
+function modTable(M,num){
+  const R=M.R;
+  if(M.type==="cat"){const pc=x=>isFinite(x)?(x>999?">999":x.toFixed(0))+"%":"–";
+    const rows=R.groups.map(g=>[esc(g.name),String(g.k),fi(g.SN),fr(g.T.rw),br(g.T.ci[0],g.T.ci[1]),fr(g.T.SDp),br(g.T.cv[0],g.T.cv[1]),pc(g.T.pct)]);
+    rows.push(["All studies",String(R.k),fi(R.SN),fr(R.Tall.rw),br(R.Tall.ci[0],R.Tall.ci[1]),fr(R.Tall.SDp),br(R.Tall.cv[0],R.Tall.cv[1]),pc(R.Tall.pct)]);
+    return apaTable(num,`Subgroup Analysis by ${esc(cap1(M.name))}`,[esc(cap1(M.name)),"<i>k</i>","<i>N</i>","<i>r</i>̄","95% CI","<i>SD</i><sub>ρ</sub>","80% CV","% Var"],rows,
+      `CI = confidence interval; CV = credibility interval; % Var = percentage of observed variance due to sampling error. Test of subgroup differences: <i>Q</i><sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, <i>p</i> ${R.pB<0.001?"< .001":"= "+fr(R.pB,3)}; residual heterogeneity: <i>Q</i><sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, <i>p</i> ${R.pW<0.001?"< .001":"= "+fr(R.pW,3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);}
+  const rows=[["Intercept (Fisher's <i>z</i>)",R.b0.toFixed(3),R.se0.toFixed(3),`[${R.ci0[0].toFixed(3)}, ${R.ci0[1].toFixed(3)}]`,"–"],
+    [esc(cap1(M.name)),R.b1.toFixed(4),R.se1.toFixed(4),`[${R.ci[0].toFixed(4)}, ${R.ci[1].toFixed(4)}]`,`<i>z</i> = ${R.zs.toFixed(2)}, <i>p</i> ${R.p<0.001?"< .001":"= "+fr(R.p,3)}`]];
+  return apaTable(num,`Meta-Regression of Correlations on ${esc(cap1(M.name))}`,["Predictor","<i>b</i>","<i>SE</i>","95% CI","Test"],rows,
+    `Mixed-effects meta-regression on Fisher's <i>z</i> (<i>k</i> = ${R.k}); weights are the inverse of each study's sampling variance plus the residual between-study variance. <i>Q</i><sub>M</sub>(1) = ${R.QM.toFixed(2)}; <i>Q</i><sub>E</sub>(${R.dfE}) = ${R.QE.toFixed(2)}, <i>p</i> ${R.pE<0.001?"< .001":"= "+fr(R.pE,3)}; τ²<sub>res</sub> = ${fv(R.t2)}; <i>R</i>² = ${(100*R.R2).toFixed(0)}%. Approximate change in <i>r</i> per unit at the mean = ${R.slopeR>=0?"":"−"}${fr(Math.abs(R.slopeR),3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);
+}
+function modFig(M){return M.type==="cat"?{title:`Weighted Mean Correlations by ${esc(cap1(M.name))}`,svg:figSubgroups(M),note:"Squares show the sample-size weighted mean correlation in each subgroup, with 95% confidence intervals; the diamond shows the mean across all studies."}:{title:`Meta-Regression of Correlations on ${esc(cap1(M.name))}`,svg:figBubble(M),note:"Each circle is a study, with area proportional to sample size. The line shows the predicted correlation from a mixed-effects meta-regression on Fisher's z, back-transformed to r."};}
 /* ---------------- Part 3: own data ---------------- */
-const U_EXAMPLE=`study,N,r,rxx,ryy
-Adams 2015,212,.31,.86,.79
-Baker 2016,84,.42,.81,
-Chen 2016,156,.22,,.74
-Diaz 2017,48,.51,.78,.70
-Evans 2017,310,.19,.88,.82
-Foster 2018,95,.36,,
-Garcia 2018,67,.12,.80,.76
-Hughes 2019,402,.24,.90,.80
-Ito 2019,58,.47,.75,
-Jones 2019,133,.29,.84,.77
-Kim 2020,76,.38,,.71
-Lopez 2020,245,.21,.87,.81
-Moore 2021,41,.55,.79,.68
-Nguyen 2021,188,.27,.85,
-Ortiz 2022,112,.33,.83,.75
-Patel 2022,520,.18,.89,.83
-Quinn 2023,63,.44,,
-Reyes 2023,149,.25,.86,.78`;
+const U_EXAMPLE=`study,N,r,rxx,ryy,setting,% women
+Adams 2015,212,.31,.86,.79,Field,38
+Baker 2016,84,.42,.81,,Lab,55
+Chen 2016,156,.22,,.74,Field,42
+Diaz 2017,48,.51,.78,.70,Lab,71
+Evans 2017,310,.19,.88,.82,Field,35
+Foster 2018,95,.36,,,Lab,60
+Garcia 2018,67,.12,.80,.76,Lab,48
+Hughes 2019,402,.24,.90,.80,Field,40
+Ito 2019,58,.47,.75,,Lab,66
+Jones 2019,133,.29,.84,.77,Field,45
+Kim 2020,76,.38,,.71,Lab,58
+Lopez 2020,245,.21,.87,.81,Field,37
+Moore 2021,41,.55,.79,.68,Lab,74
+Nguyen 2021,188,.27,.85,,Field,44
+Ortiz 2022,112,.33,.83,.75,Lab,52
+Patel 2022,520,.18,.89,.83,Field,33
+Quinn 2023,63,.44,,,Lab,63
+Reyes 2023,149,.25,.86,.78,Field,41`;
 const MISSING=new Set(["","na","n/a","nan",".","-","–","null","missing"]);
 function parseOwn(txt){
   const lines=txt.split(/\r?\n/).map(l=>l.replace(/ /g," ").trim()).filter(l=>l&&!l.startsWith("#"));
@@ -1093,10 +1572,10 @@ function parseOwn(txt){
   if(!lines.length)return {err:["No data found. Paste at least three studies, one per row."]};
   let rows=lines.map(split);
   const isNum=x=>x!==""&&!isNaN(Number(x));
-  const names={n:"N",ni:"N","sample size":"N",samplesize:"N",sample_size:"N",r:"r",ri:"r",corr:"r",correlation:"r",rxx:"rxx",relx:"rxx",rel_x:"rxx",reliabilityx:"rxx",alphax:"rxx",ryy:"ryy",rely:"ryy",rel_y:"ryy",reliabilityy:"ryy",alphay:"ryy",study:"label",id:"label",label:"label",author:"label",source:"label",name:"label"};
-  let map=null;const first=rows[0].map(x=>x.toLowerCase().replace(/[\s"']/g,""));
-  if(first.some(x=>names[x]||names[x.replace(/_/g,"")])){map={};first.forEach((x,i)=>{const k=names[x]||names[x.replace(/_/g,"")];if(k&&map[k]===undefined)map[k]=i;});rows=rows.slice(1);}
-  else{const lab=!isNum(rows[0][0])&&!MISSING.has(rows[0][0].toLowerCase());const o=lab?1:0;map={N:o,r:o+1,rxx:o+2,ryy:o+3};if(lab)map.label=0;}
+  const names={n:"N",ni:"N","sample size":"N",samplesize:"N",sample_size:"N",r:"r",ri:"r",corr:"r",correlation:"r",rxx:"rxx",relx:"rxx",rel_x:"rxx",reliabilityx:"rxx",alphax:"rxx",ryy:"ryy",rely:"ryy",rel_y:"ryy",reliabilityy:"ryy",alphay:"ryy",study:"label",id:"label",label:"label",author:"label",source:"label",name:"label",moderator:"mod",mod:"mod",group:"mod",subgroup:"mod",setting:"mod",category:"mod",condition:"mod",type:"mod"};
+  let map=null,modIdx=[],modNames=[];const first=rows[0].map(x=>x.toLowerCase().replace(/[\s"']/g,""));
+  if(first.some(x=>names[x]||names[x.replace(/_/g,"")])){map={};first.forEach((x,i)=>{const k=names[x]||names[x.replace(/_/g,"")];if(k&&map[k]===undefined)map[k]=i;});const used=new Set(["N","r","rxx","ryy","label"].map(k=>map[k]).filter(v=>v!==undefined));rows[0].forEach((h,i)=>{if(!used.has(i)&&h.trim()!==""){modIdx.push(i);modNames.push(h.replace(/["']/g,"").trim());}});rows=rows.slice(1);}
+  else{const lab=!isNum(rows[0][0])&&!MISSING.has(rows[0][0].toLowerCase());const o=lab?1:0;map={N:o,r:o+1,rxx:o+2,ryy:o+3};if(rows.some(c=>(c[o+4]??"").trim()!=="")){modIdx=[o+4];modNames=["moderator"];}if(lab)map.label=0;}
   if(map.N===undefined||map.r===undefined)return {err:["Could not find columns for N and r. Add a header row naming them, or put N first and r second."]};
   const out=[],err=[];
   rows.forEach((c,i)=>{const line=i+(lines.length-rows.length)+1;const g=k=>map[k]===undefined?"":(c[map[k]]??"").replace(/["']/g,"").trim();
@@ -1104,10 +1583,11 @@ function parseOwn(txt){
     if(!isFinite(N)||N<4){err.push(`Row ${line}: N must be a number of at least 4 (found “${g("N")}”).`);return;}
     if(!isFinite(r)||Math.abs(r)>=1){err.push(`Row ${line}: r must be between −1 and 1 (found “${g("r")}”).`);return;}
     const rel=k=>{const t=g(k);if(MISSING.has(t.toLowerCase()))return null;const v=Number(t);if(!isFinite(v)||v<=0||v>1){err.push(`Row ${line}: ${k} must be between 0 and 1 or left blank (found “${t}”); treated as not reported.`);return null;}return v;};
-    out.push({label:g("label")||`Study ${out.length+1}`,N:Math.round(N),r,rxx:rel("rxx"),ryy:rel("ryy")});});
-  return {data:out,err};
+    out.push({label:g("label")||`Study ${out.length+1}`,N:Math.round(N),r,rxx:rel("rxx"),ryy:rel("ryy"),mods:modIdx.map(ix=>{const t=(c[ix]??"").replace(/["']/g,"").trim();return MISSING.has(t.toLowerCase())?null:t;})});});
+  return {data:out,err,modNames};
 }
 function uRun(isExample){
+  uWasExample=isExample;
   const P=parseOwn($("u-input").value),st=$("u-status");
   const data=P.data||[];
   if(data.length<3){st.innerHTML=`<div class="verdict"><span class="pill warn">Cannot analyze</span><span>${(P.err||[]).slice(0,5).join(" ")||""} At least three valid studies are needed.</span></div>`;$("u-results").hidden=true;$("u-more").hidden=true;return;}
@@ -1132,6 +1612,7 @@ function uRun(isExample){
   const dd=v=>v===null?`<span style="color:var(--muted)">–</span>`:fr(v,2);
   $("u-table").innerHTML=`<thead><tr><th style="text-align:left">Study</th><th>N</th><th>r</th><th>r<sub>xx</sub></th><th>r<sub>yy</sub></th><th>r<sub>c</sub></th></tr></thead><tbody>${data.map(d=>`<tr><td style="text-align:left">${d.label.replace(/[<>&]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]))}</td><td>${d.N}</td><td>${fr(d.r)}</td><td>${dd(d.rxx)}</td><td>${dd(d.ryy)}</td><td>${d.rxx!==null&&d.ryy!==null?fr(d.r/Math.sqrt(d.rxx*d.ryy)):dd(null)}</td></tr>`).join("")}</tbody>`;
   // reliability correction
+  let art=null;
   const ax=data.filter(d=>d.rxx!==null).map(d=>Math.sqrt(d.rxx)),by=data.filter(d=>d.ryy!==null).map(d=>Math.sqrt(d.ryy));
   if(!ax.length&&!by.length){$("u-artmsg").innerHTML=`<p class="cap">No reliabilities were provided, so only the observed (uncorrected) results are shown. Add r<sub>xx</sub> and r<sub>yy</sub> columns to correct for unreliability.</p>`;$("u-statsArt").innerHTML="";$("u-ledgerArt").innerHTML="";}
   else{
@@ -1139,6 +1620,7 @@ function uRun(isExample){
     const abar=mean(ax),bbar=mean(by),A=abar*bbar,rho=T.rw/A,V=(ax.length?vr(ax)/(abar*abar):0)+(by.length?vr(by)/(bbar*bbar):0);
     const artVar=rho*rho*A*A*V,resid=T.S2r-T.S2e-artVar,S2rho=Math.max(0,resid/(A*A)),SDrho=Math.sqrt(S2rho);
     const pa=T.S2r>0?100*(T.S2e+artVar)/T.S2r:Infinity;
+    art={abar,bbar,A,rho,V,S2rho,SDrho,pa,nx:ax.length,ny:by.length};
     const notes=[];if(!ax.length)notes.push("No r<sub>xx</sub> values were provided, so X is treated as perfectly reliable.");if(!by.length)notes.push("No r<sub>yy</sub> values were provided, so Y is treated as perfectly reliable.");
     if(ax.length===1||by.length===1)notes.push("A reliability distribution based on a single value has no variance, so V understates reliability variability.");
     $("u-artmsg").innerHTML=notes.length?`<p class="cap">${notes.join(" ")}</p>`:"";
@@ -1149,15 +1631,56 @@ function uRun(isExample){
       ["Variance of corrected correlations",`S²ρ = (S²ᵣ − S²ₑ − <span class='ov'>ρ</span>²A²V) / A² = <b>${fv(S2rho)}</b>${resid<0?"":""}`]]
       .map(([l,e])=>`<div class="row"><span class="lbl">${l}</span><span class="eq">${e}</span></div>`).join("");
   }
-  renderHet(S,T,"u-het");
-  renderBias({st:data.map(d=>({n:d.N,r:d.r,pub:true})),rho:null},"u-");
+  const het=renderHet(S,T,"u-het");
+  const bias=renderBias({st:data.map(d=>({n:d.N,r:d.r,pub:true})),rho:null},"u-");
+  const mods=ownModerators(data,P.modNames||[]);
+  uLast={data,S,T,art,het,bias,mods,joint:uJoint};
+  if($("u-reportOut").innerHTML.trim())buildReport();
 }
 $("u-run").addEventListener("click",()=>uRun(false));
+$("u-modpanel").addEventListener("change",e=>{if(e.target.name==="u-modmode"){uModMode=e.target.value;uRun(uWasExample);}});
 $("u-example").addEventListener("click",()=>{$("u-input").value=U_EXAMPLE;uRun(true);});
-$("u-clear").addEventListener("click",()=>{$("u-input").value="";$("u-status").innerHTML=`<p class="cap">Paste your studies at left, then select Analyze.</p>`;$("u-results").hidden=true;$("u-more").hidden=true;});
+$("u-clear").addEventListener("click",()=>{$("u-input").value="";$("u-reportOut").innerHTML="";uLast=null;$("u-makeReport").textContent="Create tables and figures";$("u-status").innerHTML=`<p class="cap">Paste your studies at left, then select Analyze.</p>`;$("u-results").hidden=true;$("u-more").hidden=true;});
 $("u-input").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();uRun(false);}});
 $("u-file").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{$("u-input").value=String(rd.result);uRun(false);};rd.onerror=()=>{$("u-status").innerHTML=`<div class="verdict"><span class="pill warn">Could not read file</span><span>Try saving it as a .csv or plain text file, or paste the data instead.</span></div>`;};rd.readAsText(f);});
 $("u-input").value=U_EXAMPLE;
+/* ---------------- Moderator simulations (lab) ---------------- */
+let seedM=424242,baseM;
+function newBaseM(){const g=mulberry32(seedM);baseM={zN:normals(g,100),ze:normals(g,100),zt:normals(g,100),u:Array.from({length:100},()=>g()),zN2:normals(g,100),ze2:normals(g,100),zt2:normals(g,100),ux:Array.from({length:100},()=>g())};}
+newBaseM();
+function renderModCat(){
+  const a=+$("mcA").value,b=+$("mcB").value,p=+$("mcP").value,k=+$("mcK").value,Nb=+$("mcN").value,t=+$("mcT").value;
+  $("mcA-o").textContent=fr(a,2);$("mcB-o").textContent=fr(b,2);$("mcP-o").textContent=Math.round(100*p)+"%";$("mcK-o").textContent=k;$("mcN-o").textContent=Nb;$("mcT-o").textContent=fr(t,2);
+  const N=genN(baseM.zN,k,Nb),st=[];
+  for(let i=0;i<k;i++){const g=baseM.u[i]<p?"Field":"Laboratory",rho=clamp((g==="Field"?b:a)+t*baseM.zt[i],-0.95,0.95);st.push({N:N[i],g,r:Math.tanh(Math.atanh(rho)+baseM.ze[i]/Math.sqrt(N[i]-3))});}
+  if(!st.some(d=>d.g==="Field"))st[0].g="Field";if(!st.some(d=>d.g==="Laboratory"))st[1].g="Laboratory";
+  const R=subgroupAnalysis(st,["Laboratory","Field"]);
+  drawSubgroupPlot("mcPlot",R);
+  $("mcTable").innerHTML=subTableHTML(R,"Setting");
+  const sig=R.pB<0.05,[gL,gF]=[R.groups.find(g=>g.name==="Laboratory"),R.groups.find(g=>g.name==="Field")];
+  $("mcVerdict").innerHTML=`<span class="pill ${sig?"warn":"ok"}">${sig?"Subgroups differ":"No significant difference"}</span><span>Q<sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, ${pTxt(R.pB)}. Laboratory <span class='ov'>r</span> = ${fr(gL.T.rw)}, field <span class='ov'>r</span> = ${fr(gF.T.rw)}; overall <span class='ov'>r</span> = ${fr(R.Tall.rw)}.</span>`;
+  const pc=x=>isFinite(x)?(x>999?">999":x.toFixed(0))+"%":"–";
+  $("mcLive").innerHTML=`<strong>In the current data:</strong> lumping all ${R.k} studies together gives SD<sub>ρ</sub> = ${fr(R.Tall.SDp)}, with sampling error accounting for ${pc(R.Tall.pct)} of the observed variance. Within the subgroups, SD<sub>ρ</sub> is ${fr(gL.T.SDp)} for laboratory and ${fr(gF.T.SDp)} for field studies, and sampling error accounts for ${pc(gL.T.pct)} and ${pc(gF.T.pct)}. ${(gL.T.SDp+gF.T.SDp)/2<R.Tall.SDp-0.01?"The drop in SD<sub>ρ</sub> within subgroups shows that setting accounts for much of the variability that looked like unexplained heterogeneity in the overall analysis.":"Because SD<sub>ρ</sub> does not shrink within the subgroups, setting does not account for the variability in these data."} Q<sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, ${pTxt(R.pW)}${R.pW<0.05?", so heterogeneity remains within the subgroups and other moderators may be present.":", so little heterogeneity remains once setting is taken into account."}`;
+}
+function renderModReg(){
+  const rho=+$("mrRho").value,b=+$("mrB").value,t=+$("mrT").value,k=+$("mrK").value,Nb=+$("mrN").value;
+  $("mrRho-o").textContent=fr(rho,2);$("mrB-o").textContent=(b>=0?"+":minus)+fr(Math.abs(b),3);$("mrT-o").textContent=fr(t,2);$("mrK-o").textContent=k;$("mrN-o").textContent=Nb;
+  const N=genN(baseM.zN2,k,Nb),st=[];
+  for(let i=0;i<k;i++){const x=+(1+14*baseM.ux[i]).toFixed(1),r0=clamp(rho+b*(x-8)+t*baseM.zt2[i],-0.95,0.95);st.push({N:N[i],x,r:Math.tanh(Math.atanh(r0)+baseM.ze2[i]/Math.sqrt(N[i]-3))});}
+  const R=metaReg(st);
+  drawRegPlot("mrPlot",st,R,"Average tenure of the sample (years)");
+  $("mrLedger").innerHTML=regLedgerHTML(R,"year");
+  const sig=R.p<0.05;
+  $("mrVerdict").innerHTML=`<span class="pill ${sig?"warn":"ok"}">${sig?"Tenure moderates the correlation":"No significant moderation"}</span><span>Each additional year of tenure changes r by about ${R.slopeR>=0?"+":minus}${fr(Math.abs(R.slopeR),3)} (${pTxt(R.p)}); tenure explains ${(100*R.R2).toFixed(0)}% of the between-study variance.</span>`;
+}
+["mcA","mcB","mcP","mcK","mcN","mcT"].forEach(id=>$(id).addEventListener("input",renderModCat));
+["mrRho","mrB","mrT","mrK","mrN"].forEach(id=>$(id).addEventListener("input",renderModReg));
+$("mcRedraw").addEventListener("click",()=>{seedM=(seedM*1103515245+12345)>>>0;newBaseM();renderModCat();renderModReg();});
+$("mrRedraw").addEventListener("click",()=>{seedM=(seedM*1103515245+12345)>>>0;newBaseM();renderModCat();renderModReg();});
+const SEEDM=seedM,defMC={},defMR={};["mcA","mcB","mcP","mcK","mcN","mcT"].forEach(id=>defMC[id]=$(id).value);["mrRho","mrB","mrT","mrK","mrN"].forEach(id=>defMR[id]=$(id).value);
+$("mcReset").addEventListener("click",()=>{for(const id in defMC)$(id).value=defMC[id];seedM=SEEDM;newBaseM();renderModCat();renderModReg();});
+$("mrReset").addEventListener("click",()=>{for(const id in defMR)$(id).value=defMR[id];seedM=SEEDM;newBaseM();renderModCat();renderModReg();});
+renderModCat();renderModReg();
 renderAtt();
 render1();render2();uRun(true);
 })();
