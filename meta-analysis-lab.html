@@ -182,6 +182,8 @@ ol.steps li{font-size:14.5px}
 .modblock{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--line);margin-top:8px}
 .modmode{display:flex;flex-wrap:wrap;gap:8px 20px;padding:10px 12px;background:var(--accent-soft);border-radius:8px;font-size:14px}
 .modmode label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.nw{white-space:nowrap}
+.fsub{margin-top:4px;font-size:11.5px;line-height:1.35;white-space:normal}
 .foot{font-size:12.5px;color:var(--muted);max-width:72ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -733,7 +735,7 @@ function renderHet(S,T,tid="hetTable"){
     ["Cochran&rsquo;s Q","Σwᵢ(zᵢ − <span class='ov'>z</span>)², w = N − 3",`${Q.toFixed(2)} (df = ${df})`,`${flag(p<0.05,pS+": significant",pS+": not significant")}`,"A significance test of the null hypothesis that every study shares one effect size. It indicates only whether heterogeneity (and so moderators) is likely to exist, not how large it is, and it carries the usual limitations of null hypothesis testing, including low power when k is small."],
     ["SDρ (Hunter &amp; Schmidt)","<span class='rad'>√<span class='rc'>S²ᵣ − S²ₑ</span></span>",fr(T.SDp),flag(T.SDp>0.05,"Above .05","At or below .05")+`<div class="bm">Carlson &amp; Ji (2011)</div>`,"Standard deviation of the true correlations. Larger values mean more heterogeneity, and values above .05 suggest examining moderators. The SD can be hard to interpret for some effect size metrics, so reporting the variance component may be preferable."],
     ["σ²ρ, random-effects variance (Hunter &amp; Schmidt)","S²ᵣ − S²ₑ",fv(T.S2p),flag(T.S2p>0.0025,"Above .0025","At or below .0025")+`<div class="bm">= SD of .05</div>`,"Variance of the true correlations in the r metric. Kepes et al. favor reporting this random-effects variance component (REVC) over the SD."],
-    ["τ², random-effects variance (DerSimonian–Laird)","(Q − df) / C",fv(tau2),flag(tau2>0.0025,"Above .0025","At or below .0025"),"The same quantity estimated in the Hedges &amp; Olkin tradition, in Fisher&rsquo;s z. For correlations of modest size it is close to σ²ρ; differences here come from the z transformation and the weights."],
+    ["τ², random-effects variance (DerSimonian–Laird)","(Q − df) / C<div class='fsub'>where <span class='nw'>C = Σwᵢ − Σwᵢ²/Σwᵢ</span>, <span class='nw'>wᵢ = N − 3</span></div>",fv(tau2),flag(tau2>0.0025,"Above .0025","At or below .0025"),"The same quantity estimated in the Hedges &amp; Olkin tradition, in Fisher&rsquo;s z. For correlations of modest size it is close to σ²ρ; differences here come from the z transformation and the weights."],
     ["τ (z metric)","<span class='rad'>√<span class='rc'>τ²</span></span>",fr(tau),flag(tau>0.05,"Above .05","At or below .05"),"Standard deviation of true effects in Fisher&rsquo;s z, interpreted like SDρ."],
     ["80% credibility interval (Hunter &amp; Schmidt)","<span class='ov'>r</span> ± 1.28·SDρ",`${fr(T.cv[0])} to ${fr(T.cv[1])}`,flag(crW>0.11,`Width ${fr(crW)}: above .11`,`Width ${fr(crW)}: .11 or less`)+`<div class="bm">Koslowsky &amp; Sagie (1993)</div>`,"Range expected to hold the middle 80% of true correlations. A wide interval indicates that the effect sizes likely come from populations with different means, that is, that important moderators are present. It treats the mean and the variance as if they were estimated without error. Whether the interval includes zero is not a recommended criterion."],
     ["80% prediction interval","tanh[<span class='hat'>μ</span> ± t(k−2)·<span class='rad'>√<span class='rc'>τ² + SE²</span></span>]",`${fr(pi[0])} to ${fr(pi[1])}`,flag(piW>0.11,`Width ${fr(piW)}: above .11`,`Width ${fr(piW)}: .11 or less`),"The Hedges &amp; Olkin counterpart of the credibility interval. Because it also incorporates uncertainty in the mean and in τ², it is somewhat wider and is the statistically preferred interval (Brannick et al., 2021; Kepes et al., 2013)."],
@@ -1652,7 +1654,8 @@ function renderModCat(){
   const a=+$("mcA").value,b=+$("mcB").value,p=+$("mcP").value,k=+$("mcK").value,Nb=+$("mcN").value,t=+$("mcT").value;
   $("mcA-o").textContent=fr(a,2);$("mcB-o").textContent=fr(b,2);$("mcP-o").textContent=Math.round(100*p)+"%";$("mcK-o").textContent=k;$("mcN-o").textContent=Nb;$("mcT-o").textContent=fr(t,2);
   const N=genN(baseM.zN,k,Nb),st=[];
-  for(let i=0;i<k;i++){const g=baseM.u[i]<p?"Field":"Laboratory",rho=clamp((g==="Field"?b:a)+t*baseM.zt[i],-0.95,0.95);st.push({N:N[i],g,r:Math.tanh(Math.atanh(rho)+baseM.ze[i]/Math.sqrt(N[i]-3))});}
+  const nF=Math.max(1,Math.min(k-1,Math.round(p*k))),rk=baseM.u.slice(0,k).map((v,i)=>i).sort((x,y)=>baseM.u[x]-baseM.u[y]),isF=new Set(rk.slice(0,nF));
+  for(let i=0;i<k;i++){const g=isF.has(i)?"Field":"Laboratory",rho=clamp((g==="Field"?b:a)+t*baseM.zt[i],-0.95,0.95);st.push({N:N[i],g,r:Math.tanh(Math.atanh(rho)+baseM.ze[i]/Math.sqrt(N[i]-3))});}
   if(!st.some(d=>d.g==="Field"))st[0].g="Field";if(!st.some(d=>d.g==="Laboratory"))st[1].g="Laboratory";
   const R=subgroupAnalysis(st,["Laboratory","Field"]);
   drawSubgroupPlot("mcPlot",R);
