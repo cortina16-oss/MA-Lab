@@ -184,6 +184,11 @@ ol.steps li{font-size:14.5px}
 .modmode label{display:flex;align-items:center;gap:6px;cursor:pointer}
 .nw{white-space:nowrap}
 .fsub{margin-top:4px;font-size:11.5px;line-height:1.35;white-space:normal}
+.refs{max-width:none}
+.reflist{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px;max-width:90ch}
+.reflist li{padding-left:2em;text-indent:-2em;font-size:14px;line-height:1.5}
+.cite{display:flex;flex-direction:column;gap:8px;padding:14px 16px;background:var(--accent-soft);border-radius:8px}
+.citetext{margin:0;font-size:14.5px;overflow-wrap:anywhere}
 .foot{font-size:12.5px;color:var(--muted);max-width:72ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -227,6 +232,7 @@ ol.steps li{font-size:14.5px}
         </ul>
       </li>
       <li><a href="#owndata">Part 3 &middot; Analyze your own data</a></li>
+      <li><a href="#references">References and how to cite</a></li>
     </ol>
   </nav>
 
@@ -582,7 +588,7 @@ ol.steps li{font-size:14.5px}
         <strong>Before concluding that publication bias is present (Steps 5 and 6).</strong> Funnel-based methods (trim and fill, Begg, Egger, PET-PEESE) actually detect <em>small-sample bias</em>: any systematic difference between small and large studies. Small studies may use different samples (students rather than employees), different or longer measures, or come from different years or outlets, and real moderators or outliers can create the same asymmetry. Heterogeneity should be addressed first, for example by meta-analyzing moderator subgroups and handling outliers, and the bias analyses rerun within those subgroups. Raise the true SD of ρ above to see how heterogeneity affects these results.
       </div>
 
-      <p class="foot" style="margin:0">All methods use Fisher&rsquo;s z with sampling variance 1/(N − 3); estimates are converted back to r. Random-effects analyses use the DerSimonian&ndash;Laird estimator of τ². Trim and fill uses the L0 estimator and assumes missing studies are on the left. The selection models use Vevea and Woods&rsquo;s (2005) one-tailed moderate and severe weights and estimate the mean and τ² by maximum likelihood. Bias severity follows the 20% and 40% relative benchmarks, supplemented by a .02 absolute minimum (List et al., 2018), all relative to the random-effects naive mean so that like is compared with like. p-values for t statistics use a normal approximation.</p>
+      <p class="foot" style="margin:0">All methods use Fisher&rsquo;s z with sampling variance 1/(N − 3); estimates are converted back to r. Random-effects analyses use the DerSimonian&ndash;Laird estimator of τ². Trim and fill uses the L0 estimator and assumes missing studies are on the left. The selection models use Vevea and Woods&rsquo;s (2005) one-tailed moderate and severe weights and estimate the mean and τ² by maximum likelihood. Bias severity follows the 20% and 40% relative benchmarks, supplemented by a .02 absolute minimum (Kepes, Wang, &amp; Cortina, 2023), all relative to the random-effects naive mean so that like is compared with like. p-values for t statistics use a normal approximation.</p>
     </div>
   </section>
 
@@ -692,6 +698,50 @@ ol.steps li{font-size:14.5px}
         <div id="u-reportOut"></div>
       </div>
     </div>
+  </section>
+
+  <a class="totop" href="#contents">&uarr; Back to contents</a>
+
+  <section class="panel prose refs" id="references" aria-labelledby="h-references">
+    <h2 id="h-references">References and how to cite</h2>
+    <div class="cite">
+      <h3>How to cite this tool</h3>
+      <p class="citetext" id="citeText">Cortina, J. M. (2026). <i>Meta-Analysis Lab</i> [Interactive web application]. <span id="citeUrl"></span></p>
+      <div class="btns"><button type="button" id="citeCopy">Copy citation</button></div>
+    </div>
+    <h3>References</h3>
+    <ol class="reflist">
+        <li>Begg, C. B., & Mazumdar, M. (1994). Operating characteristics of a rank correlation test for publication bias. <i>Biometrics, 50</i>(4), 1088–1101.</li>
+        <li>Brannick, M. T., French, K. A., Rothstein, H. R., Kiselica, A. M., & Apostoloski, N. (2021). Capturing the underlying distribution in meta-analysis: Credibility and tolerance intervals. <i>Research Synthesis Methods, 12</i>(3), 264–290.</li>
+        <li>Carlson, K. D., & Ji, F. X. (2011). Citing and building on meta-analytic findings: A review and recommendations. <i>Organizational Research Methods, 14</i>(4), 696–717.</li>
+        <li>Copas, J., & Shi, J. Q. (2000). Meta-analysis, funnel plots and sensitivity analysis. <i>Biostatistics, 1</i>(3), 247–262.</li>
+        <li>DerSimonian, R., & Laird, N. (1986). Meta-analysis in clinical trials. <i>Controlled Clinical Trials, 7</i>(3), 177–188.</li>
+        <li>Duval, S., & Tweedie, R. (2000a). A nonparametric &ldquo;trim and fill&rdquo; method of accounting for publication bias in meta-analysis. <i>Journal of the American Statistical Association, 95</i>(449), 89–98.</li>
+        <li>Duval, S., & Tweedie, R. (2000b). Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. <i>Biometrics, 56</i>(2), 455–463.</li>
+        <li>Egger, M., Davey Smith, G., Schneider, M., & Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. <i>BMJ, 315</i>(7109), 629–634.</li>
+        <li>Hedges, L. V., & Olkin, I. (1985). <i>Statistical methods for meta-analysis</i>. Academic Press.</li>
+        <li>Hedges, L. V., & Vevea, J. L. (1996). Estimating effect size under publication bias: Small sample properties and robustness of a random effects selection model. <i>Journal of Educational and Behavioral Statistics, 21</i>(4), 299–332.</li>
+        <li>Higgins, J. P. T., & Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <i>Statistics in Medicine, 21</i>(11), 1539–1558.</li>
+        <li>Higgins, J. P. T., Thompson, S. G., Deeks, J. J., & Altman, D. G. (2003). Measuring inconsistency in meta-analyses. <i>BMJ, 327</i>(7414), 557–560.</li>
+        <li>Hunter, J. E., & Schmidt, F. L. (2004). <i>Methods of meta-analysis: Correcting error and bias in research findings</i> (2nd ed.). Sage.</li>
+        <li>Kepes, S., Banks, G. C., McDaniel, M., & Whetzel, D. L. (2012). Publication bias in the organizational sciences. <i>Organizational Research Methods, 15</i>(4), 624–662.</li>
+        <li>Kepes, S., Wang, W., & Cortina, J. M. (2023). Assessing publication bias: A 7-step user&rsquo;s guide with best-practice recommendations. <i>Journal of Business and Psychology, 38</i>(5), 957–982.</li>
+        <li>Kepes, S., Wang, W., & Cortina, J. M. (2024). Heterogeneity in meta-analytic effect sizes: An assessment of the current state of the literature. <i>Organizational Research Methods, 27</i>(3), 369–413.</li>
+        <li>Koslowsky, M., & Sagie, A. (1993). On the efficacy of credibility intervals as indicators of moderator effects in meta-analytic research. <i>Journal of Organizational Behavior, 14</i>(7), 695–699.</li>
+        <li>Lau, J., Antman, E. M., Jimenez-Silva, J., Kupelnick, B., Mosteller, F., & Chalmers, T. C. (1992). Cumulative meta-analysis of therapeutic trials for myocardial infarction. <i>New England Journal of Medicine, 327</i>(4), 248–254.</li>
+        <li>Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. <i>BMJ, 322</i>(7300), 1479–1480.</li>
+        <li>Light, R. J., & Pillemer, D. B. (1984). <i>Summing up: The science of reviewing research</i>. Harvard University Press.</li>
+        <li>Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., & Rushton, L. (2008). Contour-enhanced meta-analysis funnel plots help distinguish publication bias from other causes of asymmetry. <i>Journal of Clinical Epidemiology, 61</i>(10), 991–996.</li>
+        <li>Rosenthal, R. (1979). The file drawer problem and tolerance for null results. <i>Psychological Bulletin, 86</i>(3), 638–641.</li>
+        <li>Schmidt, F. L., & Hunter, J. E. (2015). <i>Methods of meta-analysis: Correcting error and bias in research findings</i> (3rd ed.). Sage.</li>
+        <li>Spearman, C. (1904). The proof and measurement of association between two things. <i>American Journal of Psychology, 15</i>(1), 72–101.</li>
+        <li>Stanley, T. D., & Doucouliagos, H. (2014). Meta-regression approximations to reduce publication selection bias. <i>Research Synthesis Methods, 5</i>(1), 60–78.</li>
+        <li>Steel, P. D., & Kammeyer-Mueller, J. D. (2002). Comparing meta-analytic moderator estimation techniques under realistic conditions. <i>Journal of Applied Psychology, 87</i>(1), 96–111.</li>
+        <li>Sterne, J. A. C., Sutton, A. J., Ioannidis, J. P. A., Terrin, N., Jones, D. R., Lau, J., &hellip; Higgins, J. P. T. (2011). Recommendations for examining and interpreting funnel plot asymmetry in meta-analyses of randomised controlled trials. <i>BMJ, 343</i>, d4002.</li>
+        <li>Thompson, S. G., & Higgins, J. P. T. (2002). How should meta-regression analyses be undertaken and interpreted? <i>Statistics in Medicine, 21</i>(11), 1559–1573.</li>
+        <li>Vevea, J. L., & Woods, C. M. (2005). Publication bias in research synthesis: Sensitivity analysis using a priori weight functions. <i>Psychological Methods, 10</i>(4), 428–443.</li>
+        <li>Whitener, E. M. (1990). Confusion of confidence intervals and credibility intervals in meta-analysis. <i>Journal of Applied Psychology, 75</i>(3), 315–321.</li>
+    </ol>
   </section>
 
   <a class="totop" href="#contents">&uarr; Back to contents</a>
@@ -1285,6 +1335,10 @@ async function copyHtml(el,text,btn){
   const r=document.createRange();r.selectNode(el);const s=getSelection();s.removeAllRanges();s.addRange(r);flash(btn,"Selected: press Ctrl+C (⌘C)",true);
 }
 async function copyImg(svg,btn){try{if(!window.ClipboardItem)throw 0;await navigator.clipboard.write([new ClipboardItem({"image/png":svgToPng(svg)})]);flash(btn,"Copied");}catch(e){flash(btn,"Copying images isn’t supported here; use Download PNG",true);}}
+const REFS={"begg": "Begg, C. B., & Mazumdar, M. (1994). Operating characteristics of a rank correlation test for publication bias. <i>Biometrics, 50</i>(4), 1088–1101.", "brannick": "Brannick, M. T., French, K. A., Rothstein, H. R., Kiselica, A. M., & Apostoloski, N. (2021). Capturing the underlying distribution in meta-analysis: Credibility and tolerance intervals. <i>Research Synthesis Methods, 12</i>(3), 264–290.", "carlson": "Carlson, K. D., & Ji, F. X. (2011). Citing and building on meta-analytic findings: A review and recommendations. <i>Organizational Research Methods, 14</i>(4), 696–717.", "copas": "Copas, J., & Shi, J. Q. (2000). Meta-analysis, funnel plots and sensitivity analysis. <i>Biostatistics, 1</i>(3), 247–262.", "dl": "DerSimonian, R., & Laird, N. (1986). Meta-analysis in clinical trials. <i>Controlled Clinical Trials, 7</i>(3), 177–188.", "dt2000a": "Duval, S., & Tweedie, R. (2000a). A nonparametric &ldquo;trim and fill&rdquo; method of accounting for publication bias in meta-analysis. <i>Journal of the American Statistical Association, 95</i>(449), 89–98.", "dt2000b": "Duval, S., & Tweedie, R. (2000b). Trim and fill: A simple funnel-plot-based method of testing and adjusting for publication bias in meta-analysis. <i>Biometrics, 56</i>(2), 455–463.", "egger": "Egger, M., Davey Smith, G., Schneider, M., & Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. <i>BMJ, 315</i>(7109), 629–634.", "hedgesolkin": "Hedges, L. V., & Olkin, I. (1985). <i>Statistical methods for meta-analysis</i>. Academic Press.", "hedgesvevea": "Hedges, L. V., & Vevea, J. L. (1996). Estimating effect size under publication bias: Small sample properties and robustness of a random effects selection model. <i>Journal of Educational and Behavioral Statistics, 21</i>(4), 299–332.", "higgins2002": "Higgins, J. P. T., & Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <i>Statistics in Medicine, 21</i>(11), 1539–1558.", "higgins2003": "Higgins, J. P. T., Thompson, S. G., Deeks, J. J., & Altman, D. G. (2003). Measuring inconsistency in meta-analyses. <i>BMJ, 327</i>(7414), 557–560.", "hs2004": "Hunter, J. E., & Schmidt, F. L. (2004). <i>Methods of meta-analysis: Correcting error and bias in research findings</i> (2nd ed.). Sage.", "kepes2012": "Kepes, S., Banks, G. C., McDaniel, M., & Whetzel, D. L. (2012). Publication bias in the organizational sciences. <i>Organizational Research Methods, 15</i>(4), 624–662.", "kwc2023": "Kepes, S., Wang, W., & Cortina, J. M. (2023). Assessing publication bias: A 7-step user&rsquo;s guide with best-practice recommendations. <i>Journal of Business and Psychology, 38</i>(5), 957–982.", "kwc2024": "Kepes, S., Wang, W., & Cortina, J. M. (2024). Heterogeneity in meta-analytic effect sizes: An assessment of the current state of the literature. <i>Organizational Research Methods, 27</i>(3), 369–413.", "koslowsky": "Koslowsky, M., & Sagie, A. (1993). On the efficacy of credibility intervals as indicators of moderator effects in meta-analytic research. <i>Journal of Organizational Behavior, 14</i>(7), 695–699.", "lau": "Lau, J., Antman, E. M., Jimenez-Silva, J., Kupelnick, B., Mosteller, F., & Chalmers, T. C. (1992). Cumulative meta-analysis of therapeutic trials for myocardial infarction. <i>New England Journal of Medicine, 327</i>(4), 248–254.", "lewis": "Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. <i>BMJ, 322</i>(7300), 1479–1480.", "light": "Light, R. J., & Pillemer, D. B. (1984). <i>Summing up: The science of reviewing research</i>. Harvard University Press.", "peters": "Peters, J. L., Sutton, A. J., Jones, D. R., Abrams, K. R., & Rushton, L. (2008). Contour-enhanced meta-analysis funnel plots help distinguish publication bias from other causes of asymmetry. <i>Journal of Clinical Epidemiology, 61</i>(10), 991–996.", "rosenthal": "Rosenthal, R. (1979). The file drawer problem and tolerance for null results. <i>Psychological Bulletin, 86</i>(3), 638–641.", "sh2015": "Schmidt, F. L., & Hunter, J. E. (2015). <i>Methods of meta-analysis: Correcting error and bias in research findings</i> (3rd ed.). Sage.", "spearman": "Spearman, C. (1904). The proof and measurement of association between two things. <i>American Journal of Psychology, 15</i>(1), 72–101.", "stanley": "Stanley, T. D., & Doucouliagos, H. (2014). Meta-regression approximations to reduce publication selection bias. <i>Research Synthesis Methods, 5</i>(1), 60–78.", "steel": "Steel, P. D., & Kammeyer-Mueller, J. D. (2002). Comparing meta-analytic moderator estimation techniques under realistic conditions. <i>Journal of Applied Psychology, 87</i>(1), 96–111.", "sterne": "Sterne, J. A. C., Sutton, A. J., Ioannidis, J. P. A., Terrin, N., Jones, D. R., Lau, J., &hellip; Higgins, J. P. T. (2011). Recommendations for examining and interpreting funnel plot asymmetry in meta-analyses of randomised controlled trials. <i>BMJ, 343</i>, d4002.", "thompson": "Thompson, S. G., & Higgins, J. P. T. (2002). How should meta-regression analyses be undertaken and interpreted? <i>Statistics in Medicine, 21</i>(11), 1559–1573.", "vevea": "Vevea, J. L., & Woods, C. M. (2005). Publication bias in research synthesis: Sensitivity analysis using a priori weight functions. <i>Psychological Methods, 10</i>(4), 428–443.", "whitener": "Whitener, E. M. (1990). Confusion of confidence intervals and credibility intervals in meta-analysis. <i>Journal of Applied Psychology, 75</i>(3), 315–321."};
+const CITEMAP=[["Schmidt and Hunter (2015)", "sh2015"], ["Schmidt & Hunter, 2015", "sh2015"], ["DerSimonian", "dl"], ["Higgins and Thompson (2002)", "higgins2002"], ["Kepes, Wang, and Cortina (2024)", "kwc2024"], ["Kepes, Wang, and Cortina (2023)", "kwc2023"], ["Duval", "dt2000a"], ["Duval", "dt2000b"], ["Stanley", "stanley"], ["Vevea", "vevea"], ["Begg", "begg"], ["Egger", "egger"], ["Lewis and Clarke", "lewis"], ["Peters et al.", "peters"], ["Light and Pillemer", "light"], ["Lau et al.", "lau"], ["Kepes et al. (2012)", "kepes2012"], ["Thompson & Higgins", "thompson"], ["Thompson &amp; Higgins", "thompson"]];
+function reportRefs(texts){const all=texts.join(" ").replace(/&amp;/g,"&"),keys=[];CITEMAP.forEach(([pat,k])=>{if(all.includes(pat.replace(/&amp;/g,"&"))&&!keys.includes(k))keys.push(k);});
+  return keys.map(k=>REFS[k]).sort((a,b)=>strip(a).localeCompare(strip(b)));}
 function buildReport(){
   const R=uLast,out=$("u-reportOut");if(!R)return;
   const T=R.T,A=R.art,H=R.het,B=R.bias,pct=x=>isFinite(x)?(x>999?">999":x.toFixed(0))+"%":"–";
@@ -1296,13 +1350,13 @@ function buildReport(){
     ["Observed variance (<i>S</i>²<sub><i>r</i></sub>)",fv(T.S2r)],["Sampling error variance (<i>S</i>²<sub><i>e</i></sub>)",fv(T.S2e)],["Residual variance (<i>S</i>²<sub>ρ</sub>)",fv(T.S2p)],
     ["<i>SD</i><sub>ρ</sub>",fr(T.SDp)],["80% credibility interval",br(T.cv[0],T.cv[1],3)],["% variance due to sampling error",pct(T.pct)]];
   if(A)r1.push({group:"Corrected for unreliability (artifact distributions)"},["Mean √<i>r<sub>xx</sub></i> (studies reporting)",`${fr(A.abar)} (${A.nx})`],["Mean √<i>r<sub>yy</sub></i> (studies reporting)",`${fr(A.bbar)} (${A.ny})`],["Compound attenuation factor (<i>A</i>)",fr(A.A)],["Mean corrected correlation (ρ̄)",fr(A.rho)],["<i>SD</i><sub>ρ</sub> (corrected)",fr(A.SDrho)],["80% credibility interval (corrected)",br(A.rho-1.2816*A.SDrho,A.rho+1.2816*A.SDrho,3)],["% variance due to artifacts",pct(A.pa)]);
-  tables.push(apaTable(tables.length+1,"Meta-Analytic Results",["Statistic","Value"],r1,`CI = confidence interval. Computations follow Hunter and Schmidt (2004).${A?" Corrections for unreliability use the artifact distribution method; values in parentheses are the numbers of studies reporting each reliability.":""}`));
+  tables.push(apaTable(tables.length+1,"Meta-Analytic Results",["Statistic","Value"],r1,`CI = confidence interval. Computations follow Schmidt and Hunter (2015).${A?" Corrections for unreliability use the artifact distribution method; values in parentheses are the numbers of studies reporting each reliability.":""}`));
   // Table 2
   tables.push(apaTable(tables.length+1,"Heterogeneity Statistics",["Statistic","Value"],[
     ["<i>Q</i> (<i>df</i>)",`${H.Q.toFixed(2)} (${H.df})`],["<i>p</i>",H.p<0.001?"< .001":fr(H.p,3)],["<i>I</i>²",`${(100*H.I2).toFixed(1)}%`],["<i>H</i>²",H.H2.toFixed(2)],
     ["τ² (Fisher's <i>z</i>)",fv(H.tau2)],["τ (Fisher's <i>z</i>)",fr(H.tau)],["80% prediction interval",br(H.pi[0],H.pi[1],3)],
     ["<i>SD</i><sub>ρ</sub> (Hunter &amp; Schmidt)",fr(T.SDp)],["80% credibility interval",br(T.cv[0],T.cv[1],3)]],
-    "<i>Q</i>, <i>I</i>², <i>H</i>², τ², and the prediction interval are computed on Fisher's <i>z</i> with weights <i>N</i> − 3 (DerSimonian–Laird estimator); the prediction interval is back-transformed to <i>r</i>. Interpretation follows Kepes, Wang, and Cortina (2024)."));
+    "<i>Q</i>, <i>I</i>², <i>H</i>², τ², and the prediction interval are computed on Fisher's <i>z</i> with weights <i>N</i> − 3 (DerSimonian &amp; Laird, 1986); <i>I</i>² follows Higgins and Thompson (2002). The prediction interval is back-transformed to <i>r</i>. Interpretation follows Kepes, Wang, and Cortina (2024)."));
   (R.mods||[]).forEach(m=>tables.push(modTable(m,tables.length+1)));
   if(R.joint)tables.push(jointTable(R.joint,tables.length+1));
   // Table 3
@@ -1313,16 +1367,18 @@ function buildReport(){
     rows.push(["Begg and Mazumdar rank correlation",`τ = ${fr(B.bg.tau,3)}`,"–",`<i>p</i> ${B.bg.p<0.001?"< .001":"= "+fr(B.bg.p,3)}`,B.bg.p<0.05?"Asymmetry":"No asymmetry"]);
     rows.push(["Egger's regression test",`<i>b</i><sub>0</sub> = ${B.eg.b0.toFixed(2)}`,"–",`<i>t</i> = ${B.egT.toFixed(2)}, <i>p</i> ${B.egP<0.001?"< .001":"= "+fr(B.egP,3)}`,B.egP<0.05?"Asymmetry":"No asymmetry"]);
     tables.push(apaTable(tables.length+1,"Publication Bias Analyses",["Method","Estimate","<i>k</i> imputed","Change from naive","Severity"],rows,
-      `Bias-adjusted estimates are compared with the naive random-effects mean. Severity follows Kepes, Wang, and Cortina (2023): minimal (< 20% change, or a change of .02 or less), moderate (20%–40%), severe (> 40%). Average adjusted estimate = ${fr(B.avgAdj)}; baseline range = ${fr(B.baseR)}; maximum range = ${fr(B.maxR)}; average range = ${fr(B.avgR)}. Selection models use Vevea and Woods's (2005) a priori weights.`));
-    figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval."});
+      `Bias-adjusted estimates are compared with the naive random-effects mean. Severity follows Kepes, Wang, and Cortina (2023): minimal (< 20% change, or a change of .02 or less), moderate (20%–40%), severe (> 40%). Average adjusted estimate = ${fr(B.avgAdj)}; baseline range = ${fr(B.baseR)}; maximum range = ${fr(B.maxR)}; average range = ${fr(B.avgR)}. Methods: trim and fill (Duval &amp; Tweedie, 2000a, 2000b), PET-PEESE (Stanley &amp; Doucouliagos, 2014), a priori selection models (Vevea &amp; Woods, 2005), the rank correlation test (Begg &amp; Mazumdar, 1994), and Egger's regression test (Egger et al., 1997).`));
+    figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval (Schmidt & Hunter, 2015). Forest plot format follows Lewis and Clarke (2001)."});
     (R.mods||[]).forEach(m=>figs.push(modFig(m)));
-    figs.push({title:"Contour-Enhanced Funnel Plot With Trim-and-Fill Imputations",svg:figFunnel(R),note:"Filled circles are observed studies; open circles are studies imputed by trim and fill (random effects). The solid line is the naive mean, and the dashed line is the trim-and-fill adjusted mean. Shading marks regions of statistical significance."});
-    figs.push({title:"Cumulative Meta-Analysis by Precision",svg:figCumulative(R),note:"Studies are added from most to least precise. The line shows the cumulative fixed-effect mean correlation; the shaded band is its 95% confidence interval. The dashed line marks the mean based on all studies."});
-    figs.push({title:"Naive and Bias-Adjusted Mean Estimates",svg:figTriangulation(R),note:"The open circle is the naive random-effects mean; filled circles are bias-adjusted estimates. Shaded bands mark changes of less than 20% and of 20%–40% from the naive mean."});
-  }else{figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval."});(R.mods||[]).forEach(m=>figs.push(modFig(m)));}
+    figs.push({title:"Contour-Enhanced Funnel Plot With Trim-and-Fill Imputations",svg:figFunnel(R),note:"Filled circles are observed studies; open circles are studies imputed by trim and fill (random effects). The solid line is the naive mean, and the dashed line is the trim-and-fill adjusted mean. Shading marks regions of statistical significance (contour-enhanced funnel plot; Peters et al., 2008). Funnel plot from Light and Pillemer (1984); trim and fill from Duval and Tweedie (2000a, 2000b), using the L0 estimator."});
+    figs.push({title:"Cumulative Meta-Analysis by Precision",svg:figCumulative(R),note:"Studies are added from most to least precise. The line shows the cumulative fixed-effect mean correlation; the shaded band is its 95% confidence interval. The dashed line marks the mean based on all studies. Cumulative meta-analysis from Lau et al. (1992), ordered by precision as recommended by Kepes et al. (2012)."});
+    figs.push({title:"Naive and Bias-Adjusted Mean Estimates",svg:figTriangulation(R),note:"The open circle is the naive random-effects mean; filled circles are bias-adjusted estimates. Shaded bands mark changes of less than 20% and of 20%–40% from the naive mean. Estimates: trim and fill (Duval & Tweedie, 2000b), PET-PEESE (Stanley & Doucouliagos, 2014), and a priori selection models (Vevea & Woods, 2005); triangulation and benchmarks follow Kepes et al. (2012) and Kepes, Wang, and Cortina (2023)."});
+  }else{figs.push({title:"Forest Plot of Study Correlations",svg:figForest(R),note:"Squares are proportional to sample size; horizontal lines are 95% confidence intervals. The diamond shows the sample-size weighted mean correlation and its 95% confidence interval (Schmidt & Hunter, 2015). Forest plot format follows Lewis and Clarke (2001)."});(R.mods||[]).forEach(m=>figs.push(modFig(m)));}
   let h=`<div class="rep-grid">`;
   tables.forEach((t,i)=>{h+=`<div class="rep-item"><div class="paper" id="u-t${i}">${t.html}</div><div class="btns"><button type="button" data-act="ct" data-i="${i}">Copy table</button><button type="button" data-act="dt" data-i="${i}">Download CSV</button></div></div>`;});
   figs.forEach((f,i)=>{h+=`<div class="rep-item"><div class="paper" id="u-f${i}"><p style="${TS}font-weight:bold;margin:0">Figure ${i+1}</p><p style="${TS}font-style:italic;margin:0 0 8px">${f.title}</p><div class="figbox">${f.svg}</div><p style="${TS}margin:8px 0 0"><i>Note.</i> ${f.note}</p></div><div class="btns"><button type="button" data-act="cf" data-i="${i}">Copy figure</button><button type="button" data-act="pf" data-i="${i}">Download PNG</button><button type="button" data-act="sf" data-i="${i}">Download SVG</button><button type="button" data-act="cn" data-i="${i}">Copy caption</button></div></div>`;});
+  const refs=reportRefs(tables.map(t=>t.html).concat(figs.map(f=>f.note)));
+  if(refs.length)h+=`<div class="rep-item"><div class="paper" id="u-refs"><div class="apa"><p style="${TS}font-weight:bold;text-align:center;margin:0 0 8px">References</p>${refs.map(r=>`<p style="${TS}margin:0 0 6px;padding-left:0.5in;text-indent:-0.5in">${r}</p>`).join("")}</div></div><div class="btns"><button type="button" data-act="cr">Copy references</button></div></div>`;
   h+=`</div>`;
   if(!B)h=`<p class="cap">Publication bias tables and figures need at least 5 studies.</p>`+h;
   h+=`<p class="cap" style="margin-top:12px">If a download does nothing, your browser or the page hosting this tool may be blocking downloads; use the copy buttons instead, or open the tool in its own browser tab.</p>`;
@@ -1330,6 +1386,7 @@ function buildReport(){
   out.onclick=e=>{const b=e.target.closest("button[data-act]");if(!b)return;const i=+b.dataset.i,act=b.dataset.act;
     if(act==="ct"){const t=tables[i];copyHtml($("u-t"+i).querySelector(".apa"),t.csv.replace(/,/g,"\t"),b);}
     else if(act==="dt"){dl(new Blob(["﻿"+tables[i].csv],{type:"text/csv"}),`meta-analysis-table-${tables[i].num}.csv`);flash(b,"Downloading");}
+    else if(act==="cr"){const el=$("u-refs").querySelector(".apa");copyHtml(el,strip(refs.join("\n")),b);}
     else if(act==="cf")copyImg(figs[i].svg,b);
     else if(act==="pf")svgToPng(figs[i].svg).then(bl=>{dl(bl,`meta-analysis-figure-${i+1}.png`);flash(b,"Downloading");}).catch(()=>flash(b,"Could not create PNG",true));
     else if(act==="sf"){dl(new Blob([figs[i].svg],{type:"image/svg+xml"}),`meta-analysis-figure-${i+1}.svg`);flash(b,"Downloading");}
@@ -1457,7 +1514,7 @@ function jointTable(J,num){
   const rows=J.coef.map(c=>[esc(c.label).replace(/^Intercept$/,"Intercept (Fisher's <i>z</i>)"),c.b.toFixed(4),c.se.toFixed(4),`[${c.ci[0].toFixed(4)}, ${c.ci[1].toFixed(4)}]`,c.zs.toFixed(2),c.p<0.001?"< .001":fr(c.p,3)]);
   const blk=J.blocks.filter(b=>b.df>1).map(b=>`${esc(b.name)}, <i>Q</i>(${b.df}) = ${b.Q.toFixed(2)}, <i>p</i> ${b.p<0.001?"< .001":"= "+fr(b.p,3)}`).join("; ");
   return apaTable(num,"Multiple Meta-Regression of Correlations on Moderators",["Predictor","<i>b</i>","<i>SE</i>","95% CI","<i>z</i>","<i>p</i>"],rows,
-    `Mixed-effects meta-regression on Fisher's <i>z</i> with all moderators entered simultaneously (<i>k</i> = ${J.k}${J.dropped?`; ${J.dropped} studies with missing moderator values were excluded`:""}). Categorical moderators are dummy coded, with the first category as the reference. <i>Q</i><sub>M</sub>(${J.dfM}) = ${J.QM.toFixed(2)}, <i>p</i> ${J.pM<0.001?"< .001":"= "+fr(J.pM,3)}; <i>Q</i><sub>E</sub>(${J.dfE}) = ${J.QE.toFixed(2)}, <i>p</i> ${J.pE<0.001?"< .001":"= "+fr(J.pE,3)}; τ²<sub>res</sub> = ${fv(J.t2)}; <i>R</i>² = ${(100*J.R2).toFixed(0)}%.${blk?` Omnibus tests for multi-category moderators: ${blk}.`:""}`);
+    `Mixed-effects meta-regression on Fisher's <i>z</i> (Thompson &amp; Higgins, 2002) with all moderators entered simultaneously (<i>k</i> = ${J.k}${J.dropped?`; ${J.dropped} studies with missing moderator values were excluded`:""}). Categorical moderators are dummy coded, with the first category as the reference. <i>Q</i><sub>M</sub>(${J.dfM}) = ${J.QM.toFixed(2)}, <i>p</i> ${J.pM<0.001?"< .001":"= "+fr(J.pM,3)}; <i>Q</i><sub>E</sub>(${J.dfE}) = ${J.QE.toFixed(2)}, <i>p</i> ${J.pE<0.001?"< .001":"= "+fr(J.pE,3)}; τ²<sub>res</sub> = ${fv(J.t2)}; <i>R</i>² = ${(100*J.R2).toFixed(0)}%.${blk?` Omnibus tests for multi-category moderators: ${blk}.`:""}`);
 }
 function ownModerators(data,names){
   const list=$("u-modlist"),msg=$("u-modmsg");list.innerHTML="";
@@ -1540,13 +1597,13 @@ function modTable(M,num){
     const rows=R.groups.map(g=>[esc(g.name),String(g.k),fi(g.SN),fr(g.T.rw),br(g.T.ci[0],g.T.ci[1]),fr(g.T.SDp),br(g.T.cv[0],g.T.cv[1]),pc(g.T.pct)]);
     rows.push(["All studies",String(R.k),fi(R.SN),fr(R.Tall.rw),br(R.Tall.ci[0],R.Tall.ci[1]),fr(R.Tall.SDp),br(R.Tall.cv[0],R.Tall.cv[1]),pc(R.Tall.pct)]);
     return apaTable(num,`Subgroup Analysis by ${esc(cap1(M.name))}`,[esc(cap1(M.name)),"<i>k</i>","<i>N</i>","<i>r</i>̄","95% CI","<i>SD</i><sub>ρ</sub>","80% CV","% Var"],rows,
-      `CI = confidence interval; CV = credibility interval; % Var = percentage of observed variance due to sampling error. Test of subgroup differences: <i>Q</i><sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, <i>p</i> ${R.pB<0.001?"< .001":"= "+fr(R.pB,3)}; residual heterogeneity: <i>Q</i><sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, <i>p</i> ${R.pW<0.001?"< .001":"= "+fr(R.pW,3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);}
+      `CI = confidence interval; CV = credibility interval; % Var = percentage of observed variance due to sampling error. Subgroup analyses follow Schmidt and Hunter (2015). Test of subgroup differences: <i>Q</i><sub>between</sub>(${R.df}) = ${R.QB.toFixed(2)}, <i>p</i> ${R.pB<0.001?"< .001":"= "+fr(R.pB,3)}; residual heterogeneity: <i>Q</i><sub>within</sub>(${R.dfW}) = ${R.QW.toFixed(2)}, <i>p</i> ${R.pW<0.001?"< .001":"= "+fr(R.pW,3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);}
   const rows=[["Intercept (Fisher's <i>z</i>)",R.b0.toFixed(3),R.se0.toFixed(3),`[${R.ci0[0].toFixed(3)}, ${R.ci0[1].toFixed(3)}]`,"–"],
     [esc(cap1(M.name)),R.b1.toFixed(4),R.se1.toFixed(4),`[${R.ci[0].toFixed(4)}, ${R.ci[1].toFixed(4)}]`,`<i>z</i> = ${R.zs.toFixed(2)}, <i>p</i> ${R.p<0.001?"< .001":"= "+fr(R.p,3)}`]];
   return apaTable(num,`Meta-Regression of Correlations on ${esc(cap1(M.name))}`,["Predictor","<i>b</i>","<i>SE</i>","95% CI","Test"],rows,
-    `Mixed-effects meta-regression on Fisher's <i>z</i> (<i>k</i> = ${R.k}); weights are the inverse of each study's sampling variance plus the residual between-study variance. <i>Q</i><sub>M</sub>(1) = ${R.QM.toFixed(2)}; <i>Q</i><sub>E</sub>(${R.dfE}) = ${R.QE.toFixed(2)}, <i>p</i> ${R.pE<0.001?"< .001":"= "+fr(R.pE,3)}; τ²<sub>res</sub> = ${fv(R.t2)}; <i>R</i>² = ${(100*R.R2).toFixed(0)}%. Approximate change in <i>r</i> per unit at the mean = ${R.slopeR>=0?"":"−"}${fr(Math.abs(R.slopeR),3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);
+    `Mixed-effects meta-regression on Fisher's <i>z</i> (Thompson &amp; Higgins, 2002; <i>k</i> = ${R.k}); weights are the inverse of each study's sampling variance plus the residual between-study variance. <i>Q</i><sub>M</sub>(1) = ${R.QM.toFixed(2)}; <i>Q</i><sub>E</sub>(${R.dfE}) = ${R.QE.toFixed(2)}, <i>p</i> ${R.pE<0.001?"< .001":"= "+fr(R.pE,3)}; τ²<sub>res</sub> = ${fv(R.t2)}; <i>R</i>² = ${(100*R.R2).toFixed(0)}%. Approximate change in <i>r</i> per unit at the mean = ${R.slopeR>=0?"":"−"}${fr(Math.abs(R.slopeR),3)}.${M.miss?` ${M.miss} studies without a moderator value were excluded.`:""}`);
 }
-function modFig(M){return M.type==="cat"?{title:`Weighted Mean Correlations by ${esc(cap1(M.name))}`,svg:figSubgroups(M),note:"Squares show the sample-size weighted mean correlation in each subgroup, with 95% confidence intervals; the diamond shows the mean across all studies."}:{title:`Meta-Regression of Correlations on ${esc(cap1(M.name))}`,svg:figBubble(M),note:"Each circle is a study, with area proportional to sample size. The line shows the predicted correlation from a mixed-effects meta-regression on Fisher's z, back-transformed to r."};}
+function modFig(M){return M.type==="cat"?{title:`Weighted Mean Correlations by ${esc(cap1(M.name))}`,svg:figSubgroups(M),note:"Squares show the sample-size weighted mean correlation in each subgroup, with 95% confidence intervals; the diamond shows the mean across all studies. Subgroup analysis follows Schmidt and Hunter (2015)."}:{title:`Meta-Regression of Correlations on ${esc(cap1(M.name))}`,svg:figBubble(M),note:"Each circle is a study, with area proportional to sample size. The line shows the predicted correlation from a mixed-effects meta-regression on Fisher's z, back-transformed to r (Thompson & Higgins, 2002)."};}
 /* ---------------- Part 3: own data ---------------- */
 const U_EXAMPLE=`study,N,r,rxx,ryy,setting,% women
 Adams 2015,212,.31,.86,.79,Field,38
@@ -1684,6 +1741,9 @@ const SEEDM=seedM,defMC={},defMR={};["mcA","mcB","mcP","mcK","mcN","mcT"].forEac
 $("mcReset").addEventListener("click",()=>{for(const id in defMC)$(id).value=defMC[id];seedM=SEEDM;newBaseM();renderModCat();renderModReg();});
 $("mrReset").addEventListener("click",()=>{for(const id in defMR)$(id).value=defMR[id];seedM=SEEDM;newBaseM();renderModCat();renderModReg();});
 renderModCat();renderModReg();
+/* ---------------- Citation ---------------- */
+(function(){const el=$("citeUrl");if(!el)return;let u="https://cortina16-oss.github.io/MA-Lab/";try{const h=location.hostname;if(/github\.io$/.test(h)||(/^https?:$/.test(location.protocol)&&!/claude\.ai$|anthropic|localhost/.test(h)&&h))u=location.origin+location.pathname;}catch(e){}el.textContent=u;
+  $("citeCopy").addEventListener("click",e=>copyHtml($("citeText"),$("citeText").textContent,e.currentTarget));})();
 renderAtt();
 render1();render2();uRun(true);
 })();
