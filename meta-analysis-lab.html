@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meta-Analysis Lab</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -36,8 +35,7 @@
   --ok:#6fc391; --ok-soft:rgba(111,195,145,.14);
   --shade:rgba(227,232,238,.06); --shade2:rgba(227,232,238,.15); color-scheme:dark;
 }
-*{box-sizing:border-box}
-body{margin:0}
+*{box-sizing:border-box}body{margin:0}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:flex;flex-direction:column;gap:40px}
 header{display:flex;flex-direction:column;gap:6px;max-width:68ch}
@@ -192,10 +190,10 @@ ol.steps li{font-size:14.5px}
 .foot{font-size:12.5px;color:var(--muted);max-width:72ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+
+
 </head>
 <body>
-
-
 <div class="wrap">
   <header>
     <span class="eyebrow">Psychometric meta-analysis · correlations</span>
@@ -326,7 +324,7 @@ ol.steps li{font-size:14.5px}
     <h3 id="h-het">Heterogeneity statistics for the Part 1 data</h3>
     <p style="font-size:14.5px">Kepes et al. separate <strong>absolute</strong> statistics, which quantify the amount of heterogeneity and can be compared across meta-analyses, from <strong>relative</strong> statistics, which express the share of observed variance that reflects real differences. The benchmarks below are the ones they review. Each comes from a single study in a particular context, so they caution against applying them mechanically; whether heterogeneity is large should be judged against the purpose and context of the research.</p>
     <div class="tablewrap hetwrap"><table id="hetTable"></table></div>
-    <p class="foot" style="margin:0">Q, I², H², τ², and the prediction interval use Fisher&rsquo;s z with weights N − 3 (DerSimonian&ndash;Laird estimator), back-transformed to r where noted. The prediction interval uses t with k − 2 df, following the appendix formulas in Kepes et al. The Hunter &amp; Schmidt rows use the untransformed correlations. The p-value for Q uses the Wilson&ndash;Hilferty approximation to the chi-square distribution.</p>
+    <p class="foot" style="margin:0">Q, I², H², τ², and the prediction interval use Fisher&rsquo;s z with weights N − 3 (DerSimonian&ndash;Laird estimator), back-transformed to r where noted. The prediction interval uses t with k − 2 df, following the appendix formulas in Kepes et al. The Hunter &amp; Schmidt rows use the untransformed correlations. The p-value for Q is computed from the exact chi-square distribution.</p>
   </section>
 
   <a class="totop" href="#contents">&uarr; Back to contents</a>
@@ -588,7 +586,7 @@ ol.steps li{font-size:14.5px}
         <strong>Before concluding that publication bias is present (Steps 5 and 6).</strong> Funnel-based methods (trim and fill, Begg, Egger, PET-PEESE) actually detect <em>small-sample bias</em>: any systematic difference between small and large studies. Small studies may use different samples (students rather than employees), different or longer measures, or come from different years or outlets, and real moderators or outliers can create the same asymmetry. Heterogeneity should be addressed first, for example by meta-analyzing moderator subgroups and handling outliers, and the bias analyses rerun within those subgroups. Raise the true SD of ρ above to see how heterogeneity affects these results.
       </div>
 
-      <p class="foot" style="margin:0">All methods use Fisher&rsquo;s z with sampling variance 1/(N − 3); estimates are converted back to r. Random-effects analyses use the DerSimonian&ndash;Laird estimator of τ². Trim and fill uses the L0 estimator and assumes missing studies are on the left. The selection models use Vevea and Woods&rsquo;s (2005) one-tailed moderate and severe weights and estimate the mean and τ² by maximum likelihood. Bias severity follows the 20% and 40% relative benchmarks, supplemented by a .02 absolute minimum (Kepes, Wang, &amp; Cortina, 2023), all relative to the random-effects naive mean so that like is compared with like. p-values for t statistics use a normal approximation.</p>
+      <p class="foot" style="margin:0">All methods use Fisher&rsquo;s z with sampling variance 1/(N − 3); estimates are converted back to r. Random-effects analyses use the DerSimonian&ndash;Laird estimator of τ². Trim and fill uses the L0 estimator and assumes missing studies are on the left. The selection models use Vevea and Woods&rsquo;s (2005) one-tailed moderate and severe weights and estimate the mean and τ² by maximum likelihood. Bias severity follows the 20% and 40% relative benchmarks, supplemented by a .02 absolute minimum (Kepes, Wang, &amp; Cortina, 2023), all relative to the random-effects naive mean so that like is compared with like. p-values for t statistics use the exact t distribution.</p>
     </div>
   </section>
 
@@ -759,14 +757,20 @@ function fr(x,d=3){if(!isFinite(x))return"–";const s=Math.abs(x).toFixed(d).re
 function fv(x,d=4){return fr(x,d);}
 function fi(x){return Math.round(x).toLocaleString("en-US");}
 function genN(zN,k,Nbar){let N=[];for(let i=0;i<k;i++)N.push(Math.max(10,Math.round(Nbar*Math.exp(0.7*zN[i]-0.245))));const f=Nbar/(sum(N)/k);return N.map(n=>Math.max(10,Math.round(n*f)));}
-function tcrit(df){const z=1.959964;return z+(z**3+z)/(4*df)+(5*z**5+16*z**3+3*z)/(96*df*df)+(3*z**7+19*z**5+17*z**3-15*z)/(384*df**3);}
+function lgam(x){const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(x<0.5)return Math.log(Math.PI/Math.abs(Math.sin(Math.PI*x)))-lgam(1-x);x-=1;let a=0.99999999999980993;const t=x+7.5;for(let i=0;i<8;i++)a+=c[i]/(x+i+1);return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);}
+function gammaQ(a,x){if(x<=0)return 1;const g=lgam(a);if(x<a+1){let s=1/a,d=s,ap=a;for(let n=0;n<500;n++){ap++;d*=x/ap;s+=d;if(Math.abs(d)<Math.abs(s)*1e-15)break;}return Math.max(0,1-s*Math.exp(-x+a*Math.log(x)-g));}let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-15)break;}return Math.min(1,Math.exp(-x+a*Math.log(x)-g)*h);}
+function betacf(x,a,b){let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<1e-300)d=1e-300;d=1/d;let h=d;for(let m=1;m<500;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<1e-300)d=1e-300;c=1+aa/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-15)break;}return h;}
+function betaI(x,a,b){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(lgam(a+b)-lgam(a)-lgam(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?bt*betacf(x,a,b)/a:1-bt*betacf(1-x,b,a)/b;}
+function tCdf(t,df){const p=0.5*betaI(df/(df+t*t),df/2,0.5);return t>0?1-p:p;}
+function tInv(p,df){let lo=-1e3,hi=1e3;for(let i=0;i<200;i++){const m=(lo+hi)/2;if(tCdf(m,df)<p)lo=m;else hi=m;}return (lo+hi)/2;}
+function tcrit(df){return tInv(0.975,df);}
 function rcrit(n){const df=n-2,t=tcrit(df);return t/Math.sqrt(t*t+df);}
 const NS="http://www.w3.org/2000/svg";
 
 
-function normCdf(x){const t=1/(1+0.2316419*Math.abs(x)),d=0.3989423*Math.exp(-x*x/2);const pr=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return x>0?1-pr:pr;}
-function chiP(Q,df){if(Q<=0)return 1;const a=2/(9*df),z=(Math.pow(Q/df,1/3)-(1-a))/Math.sqrt(a);return 1-normCdf(z);}
-function tq(df,z){return z+(z**3+z)/(4*df)+(5*z**5+16*z**3+3*z)/(96*df*df)+(3*z**7+19*z**5+17*z**3-15*z)/(384*df**3);}
+function normCdf(x){const z=Math.abs(x)/Math.SQRT2,t=1/(1+0.5*z);const r=t*Math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+t*(0.09678418+t*(-0.18628806+t*(0.27886807+t*(-1.13520398+t*(1.48851587+t*(-0.82215223+t*0.17087277)))))))));return x>=0?1-r/2:r/2;}
+function chiP(Q,df){if(!(Q>0))return 1;return gammaQ(df/2,Q/2);}
+function tq(df,z){return tInv(normCdf(z),df);}
 function flag(over,txtOver,txtUnder){return over?`<span class="pill warn">${txtOver}</span>`:`<span class="pill ok">${txtUnder}</span>`;}
 function renderHet(S,T,tid="hetTable"){
   const {k,N,r}=S;const z=r.map(Math.atanh),w=N.map(n=>n-3),W=sum(w);
@@ -801,7 +805,7 @@ function renderHet(S,T,tid="hetTable"){
   return {Q,df,p,I2,H2,tau2,tau,pi};
 }
 
-function tToP(t,df){const z=Math.abs(t)*(1-1/(4*df))/Math.sqrt(1+t*t/(2*df));return 2*(1-normCdf(z));}
+function tToP(t,df){if(!isFinite(t))return 0;return betaI(df/(df+t*t),df/2,0.5);}
 function wls(x,y,w){const W=sum(w),xb=sum(x.map((v,i)=>w[i]*v))/W,yb=sum(y.map((v,i)=>w[i]*v))/W;
   const Sxx=sum(x.map((v,i)=>w[i]*(v-xb)**2)),Sxy=sum(x.map((v,i)=>w[i]*(v-xb)*(y[i]-yb)));
   const b1=Sxy/Sxx,b0=yb-b1*xb,n=x.length,ss=sum(y.map((v,i)=>w[i]*(v-b0-b1*x[i])**2)),s2=ss/(n-2);
