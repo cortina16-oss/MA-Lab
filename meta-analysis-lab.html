@@ -199,6 +199,7 @@ ol.steps li{font-size:14.5px}
     <span class="eyebrow">Psychometric meta-analysis · correlations</span>
     <h1>Meta-Analysis Lab</h1>
     <p class="lede">Simulate a literature of correlational studies, see how much of their spread is plain sampling error, and watch what selective publication does to the average.</p>
+    <p class="cite citetext" style="margin-top:6px;display:block">If you use any part of this lab, please cite it as: Cortina, J. M. (2026). <i>Meta-Analysis Lab</i> (Version 1.0) [Web application]. https://josecortina.com/meta-analysis-lab</p>
   </header>
 
   <nav class="toc panel" id="contents" aria-label="Contents">
@@ -704,7 +705,7 @@ ol.steps li{font-size:14.5px}
     <h2 id="h-references">References and how to cite</h2>
     <div class="cite">
       <h3>How to cite this tool</h3>
-      <p class="citetext" id="citeText">Cortina, J. M. (2026). <i>Meta-Analysis Lab</i> [Interactive web application]. <span id="citeUrl"></span></p>
+      <p class="citetext" id="citeText">Cortina, J. M. (2026). <i>Meta-Analysis Lab</i> (Version 1.0) [Web application]. https://josecortina.com/meta-analysis-lab</p>
       <div class="btns"><button type="button" id="citeCopy">Copy citation</button></div>
     </div>
     <h3>References</h3>
@@ -1746,8 +1747,7 @@ $("mcReset").addEventListener("click",()=>{for(const id in defMC)$(id).value=def
 $("mrReset").addEventListener("click",()=>{for(const id in defMR)$(id).value=defMR[id];seedM=SEEDM;newBaseM();renderModCat();renderModReg();});
 renderModCat();renderModReg();
 /* ---------------- Citation ---------------- */
-(function(){const el=$("citeUrl");if(!el)return;let u="https://cortina16-oss.github.io/MA-Lab/";try{const h=location.hostname;if(/github\.io$/.test(h)||(/^https?:$/.test(location.protocol)&&!/claude\.ai$|anthropic|localhost/.test(h)&&h))u=location.origin+location.pathname;}catch(e){}el.textContent=u;
-  $("citeCopy").addEventListener("click",e=>copyHtml($("citeText"),$("citeText").textContent,e.currentTarget));})();
+(function(){$("citeCopy").addEventListener("click",e=>copyHtml($("citeText"),$("citeText").textContent,e.currentTarget));})();
 renderAtt();
 render1();render2();uRun(true);
 })();
